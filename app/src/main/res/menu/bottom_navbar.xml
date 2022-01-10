@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home_opt"
+        android:title="Home"
+        android:icon="@drawable/ic_home_foreground"/>
+    <item
+        android:id="@+id/book_opt"
+        android:title="Books"
+        android:icon="@drawable/ic_books_foreground"/>
+    <item
+        android:id="@+id/camera_opt"
+        android:title="Camera"
+        android:icon="@drawable/ic_camera_foreground"/>
+    <item
+        android:id="@+id/map_opt"
+        android:title="Location"
+        android:icon="@drawable/ic_location_foreground"/>
+    <item
+        android:id="@+id/notify_opt"
+        android:title="Notifications"
+        android:icon="@drawable/ic_notification_foreground"/>
+</menu>
