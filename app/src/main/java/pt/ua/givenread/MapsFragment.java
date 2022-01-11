@@ -5,14 +5,17 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -31,9 +34,22 @@ public class MapsFragment extends Fragment {
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            LatLng sydney = new LatLng(-34, 151);
-            googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+            googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+            LatLng centerCamera = new LatLng(40.6333308, -8.6499974);
+
+            CameraPosition cameraPosition = new CameraPosition.Builder().target(centerCamera).zoom(14).build();
+
+            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+            LatLng bookstop1 = new LatLng(40.63318631270549, -8.659459114357666);
+            googleMap.addMarker(new MarkerOptions().position(bookstop1).title("Bookstop 1"));
+            //googleMap.moveCamera(CameraUpdateFactory.newLatLng(bookstop1));
+
+            LatLng bookstop2 = new LatLng(40.63067854192939, -8.65347069632065);
+            googleMap.addMarker(new MarkerOptions().position(bookstop2).title("Bookstop 2"));
+            //googleMap.moveCamera(CameraUpdateFactory.newLatLng(bookstop2));
         }
     };
 
