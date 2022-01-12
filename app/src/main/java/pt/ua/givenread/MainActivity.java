@@ -22,6 +22,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     BottomNavigationView bottomNavView;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,17 +36,24 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     BookSearchFragment bookSearchFragment = new BookSearchFragment();
+    BooksListFragment booksListFragment = new BooksListFragment();
     MapsFragment mapsFragment = new MapsFragment();
 
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item){
         switch (item.getItemId()){
+            case R.id.home_opt:
+                return true;
             case R.id.book_opt:
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, bookSearchFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, booksListFragment).commit();
+                return true;
+            case R.id.camera_opt:
                 return true;
             case R.id.map_opt:
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, mapsFragment).commit();
+                return true;
+            case R.id.notify_opt:
                 return true;
         }
         return false;

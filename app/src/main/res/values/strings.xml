@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">GiveNRead</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="to_give">To Give</string>
+    <string name="to_read">To Read</string>
 </resources>
