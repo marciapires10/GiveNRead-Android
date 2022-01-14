@@ -47,23 +47,21 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/idTVpublisher"
             android:layout_marginTop="3dp"
+            android:layout_marginBottom="41dp"
             android:layout_toEndOf="@id/idIVbook"
             android:padding="3dp"
             android:text="Page count"
             android:textColor="@color/black"
             android:textSize="11sp" />
 
-        <TextView
-            android:id="@+id/idTVDate"
-            android:layout_width="wrap_content"
+        <Button
+            android:layout_width="113dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/idTVPageCount"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="5dp"
+            android:layout_marginStart="200dp"
+            android:layout_marginTop="120dp"
             android:padding="3dp"
-            android:text="date"
-            android:textColor="@color/black"
-            android:textSize="11sp" />
+            android:id="@+id/add_book_to_list"
+            android:text="ADD"></Button>
 
     </RelativeLayout>
 

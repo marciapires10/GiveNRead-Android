@@ -22,16 +22,15 @@ public class BookSearchFragment extends Fragment {
     private BookAdapter adapter;
     private Context context;
 
-    private TextInputEditText keywordEditText, authorEditText;
+    private TextInputEditText keywordEditText;
     private Button searchButton;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        adapter = new BookAdapter(context);
-
         viewModel = ViewModelProviders.of(this).get(BookSearchViewModel.class);
+        adapter = new BookAdapter(context, viewModel);
         viewModel.init();
         viewModel.getVolumeResponseLiveData().observe(this, new Observer<VolumesResponse>() {
             @Override
@@ -53,7 +52,7 @@ public class BookSearchFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         keywordEditText = view.findViewById(R.id.fragment_booksearch_keyword);
-        authorEditText = view.findViewById(R.id.fragment_booksearch_author);
+        //authorEditText = view.findViewById(R.id.fragment_booksearch_author);
         searchButton = view.findViewById(R.id.fragment_booksearch_search);
 
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -68,8 +67,8 @@ public class BookSearchFragment extends Fragment {
 
     public void performSearch() {
         String keyword = keywordEditText.getEditableText().toString();
-        String author = authorEditText.getEditableText().toString();
+        //String author = authorEditText.getEditableText().toString();
 
-        viewModel.searchBooks(keyword, author);
+        viewModel.searchBooks(keyword);
     }
 }

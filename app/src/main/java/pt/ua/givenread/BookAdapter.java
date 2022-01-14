@@ -2,13 +2,17 @@ package pt.ua.givenread;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -17,11 +21,15 @@ import java.util.ArrayList;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> {
 
+    private BookSearchViewModel viewModel;
     private ArrayList<Volume> bookResults = new ArrayList<>();
     private Context context;
 
-    public BookAdapter(Context context){
+    public BookAdapter(Context context, BookSearchViewModel viewModel){
+
         this.context = context;
+        this.viewModel = viewModel;
+
     }
 
     @NonNull
@@ -33,11 +41,13 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull BookViewHolder holder, int pos){
+        Log.d("pos", String.valueOf(pos));
         Volume volume = bookResults.get(pos);
         holder.nameTV.setText(volume.getBookInfo().getTitle());
         holder.publisherTV.setText(volume.getBookInfo().getPublisher());
         holder.pageCountTV.setText("No of pages: " + volume.getBookInfo().getPageCount());
-        holder.dateTV.setText(volume.getBookInfo().getPublishedDate());
+        holder.add_book_to_list.setId(pos);
+        holder.add_book_to_list.setText(String.valueOf(pos));
 
 
         if (volume.getBookInfo().getThumbnail() != null){
@@ -48,7 +58,8 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent intent = new Intent(context, BookDetails.class);
+                Context mcontext = v.getContext();
+                Intent intent = new Intent(mcontext, BookDetails.class);
                 intent.putExtra("title", volume.getBookInfo().getTitle());
                 intent.putExtra("subtitle", volume.getBookInfo().getSubtitle());
                 intent.putExtra("authors", volume.getBookInfo().getAuthors());
@@ -61,7 +72,15 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
                 intent.putExtra("infoLink", volume.getBookInfo().getInfoLink());
                 intent.putExtra("buyLink", volume.getBookInfo().getBuyLink());
 
-                context.startActivity(intent);
+                mcontext.startActivity(intent);
+            }
+        });
+
+        holder.add_book_to_list.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Book book = new Book(volume.getBookInfo().getTitle(), "", volume.getBookInfo().getThumbnail().getSmallThumbnail());
+                viewModel.insert(book);
             }
         });
     }
@@ -76,16 +95,17 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
     }
 
     public class BookViewHolder extends RecyclerView.ViewHolder{
-        TextView nameTV, publisherTV, pageCountTV, dateTV;
+        TextView nameTV, publisherTV, pageCountTV;
         ImageView bookIV;
+        Button add_book_to_list;
 
         public BookViewHolder(View itemView) {
             super(itemView);
             nameTV = itemView.findViewById(R.id.idTVBookTitle);
             publisherTV = itemView.findViewById(R.id.idTVpublisher);
             pageCountTV = itemView.findViewById(R.id.idTVPageCount);
-            dateTV = itemView.findViewById(R.id.idTVDate);
             bookIV = itemView.findViewById(R.id.idIVbook);
+            add_book_to_list = itemView.findViewById(R.id.add_book_to_list);
         }
     }
 }

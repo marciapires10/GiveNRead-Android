@@ -1,11 +1,14 @@
 package pt.ua.givenread;
 
+import android.app.Application;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import java.util.ArrayList;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -14,36 +17,57 @@ import retrofit2.Retrofit;
 
 public class BooksClient {
 
-    private BooksAPIEndpoints apiService;
-    private MutableLiveData<VolumesResponse> volumeResponseLiveData;
+    final BooksAPIEndpoints apiService;
+    final MutableLiveData<VolumesResponse> volumeResponseLiveData;
 
-    public BooksClient(){
+    private final BookDao bookDao;
+    private final LiveData<List<Book>> books;
+
+    public BooksClient(Application application){
         Retrofit retrofitInstance = RetrofitInstance.getRetrofitInstance();
         this.apiService = retrofitInstance.create(BooksAPIEndpoints.class);
 
         volumeResponseLiveData = new MutableLiveData<>();
 
+        bookDao = BookRoomDatabase.getInstance(application).bookDao();
+        books = bookDao.getAll();
+
     }
 
-    public void searchBooks(String keyword, String author){
-        ArrayList<BookInfo> books = new ArrayList<>();
-        Call<VolumesResponse> call = apiService.searchBooks(keyword, author);
+    public void searchBooks(String keyword){
+        Call<VolumesResponse> call = apiService.searchBooks(keyword);
         call.enqueue(new Callback<VolumesResponse>() {
             @Override
-            public void onResponse(Call<VolumesResponse> call, Response<VolumesResponse> response) {
+            public void onResponse(@NonNull Call<VolumesResponse> call, @NonNull Response<VolumesResponse> response) {
                 if (response.body() != null){
                     volumeResponseLiveData.postValue(response.body());
                 }
             }
 
             @Override
-            public void onFailure(Call<VolumesResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<VolumesResponse> call, @NonNull Throwable t) {
                 volumeResponseLiveData.postValue(null);
             }
         });
     }
 
-    public LiveData<VolumesResponse> getVolumesReponseLiveData(){
+    public LiveData<VolumesResponse> getVolumesResponseLiveData(){
         return volumeResponseLiveData;
+    }
+
+    LiveData<List<Book>> getBooks() {
+        return books;
+    }
+
+    void deleteAll(){
+        BookRoomDatabase.databaseWriteExecutor.execute(() -> {
+            bookDao.deleteAll();
+        });
+    }
+
+    void insert(Book book){
+        BookRoomDatabase.databaseWriteExecutor.execute(() -> {
+            bookDao.insert(book);
+        });
     }
 }
