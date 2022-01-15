@@ -1,0 +1,100 @@
+package pt.ua.givenread;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+
+import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.List;
+
+public class BooksListFragment extends Fragment {
+
+    private BookSearchViewModel viewModel;
+    private BookListAdapter adapter;
+    private LinearLayoutManager HorizontalLayout;
+    private Context context;
+
+    private Button addTGButton;
+    private Button addTRButton;
+    private TextView bookTV;
+
+
+    public BooksListFragment() {
+        // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        adapter = new BookListAdapter(new BookListAdapter.BookDiff());
+
+        viewModel = ViewModelProviders.of(this).get(BookSearchViewModel.class);
+        viewModel.init();
+
+        viewModel.getBooks().observe(this, books -> {
+            adapter.submitList(books);
+        });
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_bookslist, container, false);
+
+        RecyclerView recyclerView1 = view.findViewById(R.id.fragment_bookList1_RecyclerView);
+        recyclerView1.setLayoutManager(new LinearLayoutManager(getContext()));
+        HorizontalLayout = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView1.setLayoutManager(HorizontalLayout);
+        recyclerView1.setAdapter(adapter);
+
+        bookTV = view.findViewById(R.id.book);
+        viewModel.getBooks().observe(getActivity(), books -> {
+            bookTV.setText(books.toString());
+        });
+
+        //RecyclerView recyclerView2 = view.findViewById(R.id.fragment_bookList2_RecyclerView);
+        //recyclerView2.setLayoutManager(new LinearLayoutManager(getContext()));
+        //recyclerView2.setAdapter(adapter);
+
+
+        // Button to add book to To Give list
+        addTGButton = view.findViewById(R.id.addBookToGive);
+
+        addTGButton.setOnClickListener(v -> {
+            Context mcontext = v.getContext();
+            Intent intent = new Intent(mcontext, BookSearchActivity.class);
+            intent.putExtra("type", "ToGive");
+            mcontext.startActivity(intent);
+        });
+
+        // Button to add book to To Read list
+        addTRButton = view.findViewById(R.id.addBookToRead);
+
+        addTRButton.setOnClickListener(v -> {
+            Context mcontext = v.getContext();
+            Intent intent = new Intent(mcontext, BookSearchActivity.class);
+            intent.putExtra("type", "ToRead");
+            mcontext.startActivity(intent);
+        });
+
+
+
+        return view;
+    }
+
+}

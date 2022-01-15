@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:orientation="vertical"
+    tools:context=".BooksListFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/to_give"
+        android:textSize="24sp">
+    </TextView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/book"
+        android:textColor="@color/black">
+    </TextView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/fragment_bookList1_RecyclerView"
+        android:scrollbars="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add"
+        android:id="@+id/addBookToGive">
+    </Button>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/to_read"
+        android:textSize="24sp">
+    </TextView>
+
+    <!--<androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/fragment_bookList2_RecyclerView"
+        android:scrollbars="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>-->
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add"
+        android:id="@+id/addBookToRead">
+    </Button>
+
+
+</LinearLayout>

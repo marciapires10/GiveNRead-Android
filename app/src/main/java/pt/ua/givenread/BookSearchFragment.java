@@ -2,6 +2,7 @@ package pt.ua.givenread;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class BookSearchFragment extends Fragment {
+
     private BookSearchViewModel viewModel;
     private BookAdapter adapter;
     private Context context;
@@ -25,9 +27,27 @@ public class BookSearchFragment extends Fragment {
     private TextInputEditText keywordEditText;
     private Button searchButton;
 
+    private String type = "";
+
+
+    public static BookSearchFragment newInstance(String type) {
+        BookSearchFragment fragment = new BookSearchFragment();
+
+        Bundle args = new Bundle();
+        args.putString("type", type);
+        fragment.setArguments(args);
+
+        return fragment;
+    }
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        /**if (getArguments().containsKey("type")) {
+         type = getArguments().getString("type");
+        }*/
 
         viewModel = ViewModelProviders.of(this).get(BookSearchViewModel.class);
         adapter = new BookAdapter(context, viewModel);
