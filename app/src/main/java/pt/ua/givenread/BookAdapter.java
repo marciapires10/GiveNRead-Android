@@ -22,13 +22,15 @@ import java.util.ArrayList;
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> {
 
     private BookSearchViewModel viewModel;
+    private String type = "";
     private ArrayList<Volume> bookResults = new ArrayList<>();
     private Context context;
 
-    public BookAdapter(Context context, BookSearchViewModel viewModel){
+    public BookAdapter(Context context, BookSearchViewModel viewModel, String type){
 
         this.context = context;
         this.viewModel = viewModel;
+        this.type = type;
 
     }
 
@@ -79,8 +81,18 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         holder.add_book_to_list.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Book book = new Book(volume.getBookInfo().getTitle(), "", volume.getBookInfo().getThumbnail().getSmallThumbnail());
+                Log.d("printtype", type);
+                Book book;
+                if (type.equals("ToGive")){
+                    Log.d("Bool", "é to give");
+                    book = new Book(volume.getBookInfo().getTitle(), "", volume.getBookInfo().getThumbnail().getSmallThumbnail(), type);
+                }
+                else {
+                    Log.d("Bool", type);
+                    book = new Book(volume.getBookInfo().getTitle(), "", volume.getBookInfo().getThumbnail().getSmallThumbnail(), type);
+                }
                 viewModel.insert(book);
+
             }
         });
     }

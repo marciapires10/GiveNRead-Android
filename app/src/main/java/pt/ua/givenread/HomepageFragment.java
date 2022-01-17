@@ -1,12 +1,21 @@
 package pt.ua.givenread;
 
+import android.bluetooth.BluetoothClass;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.android.gms.nearby.Nearby;
+import com.google.android.gms.nearby.connection.AdvertisingOptions;
+import com.google.android.gms.nearby.connection.DiscoveredEndpointInfo;
+import com.google.android.gms.nearby.connection.DiscoveryOptions;
+import com.google.android.gms.nearby.connection.EndpointDiscoveryCallback;
+import com.google.android.gms.nearby.connection.Strategy;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -62,5 +71,33 @@ public class HomepageFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_homepage, container, false);
     }
 
+    /**private void startAdvertising(){
+        AdvertisingOptions advertisingOptions = new AdvertisingOptions.Builder().setStrategy(Strategy.P2P_STAR).build();
+        Nearby.getConnectionsClient(getContext()).startAdvertising(
+                getActivity().getLocalClassName(), "pt.ua.givenread", connectionLifecycleCallback, advertisingOptions)
+                .addOnSuccessListener(
+                        (Void unused) -> {
+                            // We're advertising!
+                        }
+                ).addOnFailureListener(
+                    (Exception e) -> {
+                        // We were unable to start advertising.
+                    }
+                );
+    }
+
+    private void startDiscovery(){
+        DiscoveryOptions discoveryOptions = new DiscoveryOptions.Builder().setStrategy(Strategy.P2P_STAR).build();
+        Nearby.getConnectionsClient(getContext()).startDiscovery("pt.ua.givenread", endpointDiscoveryCallback, discoveryOptions)
+                .addOnSuccessListener(
+                        (Void unused) -> {
+                            // We're discovering!
+                        }
+                ).addOnFailureListener(
+                    (Exception e) -> {
+                        // We're unable to start discovering.
+                    }
+                );
+    }**/
 
 }

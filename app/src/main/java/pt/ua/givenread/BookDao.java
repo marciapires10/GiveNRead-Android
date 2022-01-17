@@ -23,4 +23,10 @@ public interface BookDao {
     @Query("SELECT * FROM books")
     LiveData<List<Book>> getAll();
 
+    @Query("SELECT * FROM books WHERE type='ToGive'")
+    LiveData<List<Book>> getAllToGive();
+
+    @Query("SELECT * FROM books WHERE type='ToRead'")
+    LiveData<List<Book>> getAllToRead();
+
 }

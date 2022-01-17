@@ -14,6 +14,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -23,9 +24,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GiveNRead">
         <activity
+            android:name=".BarcodeScannerActivity"
+            android:exported="false" />
+        <activity
             android:name=".BookSearchActivity"
             android:exported="false" />
-
         <activity
             android:name=".BookDetails"
             android:exported="false" />

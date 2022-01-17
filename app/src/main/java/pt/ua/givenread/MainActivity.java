@@ -1,26 +1,32 @@
 package pt.ua.givenread;
 
+import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.google.android.gms.nearby.connection.Strategy;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
-    private static RecyclerView booksRecyclerView;
-
-    private ProgressBar progressBar;
-    private EditText searchEdt;
-    private ImageButton searchBtn;
-
     BottomNavigationView bottomNavView;
+
+    private static final String[] CAMERA_PERMISSION = new String[]{Manifest.permission.CAMERA};
+    private static final int CAMERA_REQUEST_CODE = 10;
 
 
 
@@ -35,7 +41,30 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavView.setSelectedItemId(R.id.home);
     }
 
-    BookSearchFragment bookSearchFragment = new BookSearchFragment();
+    private boolean hasCameraPermission() {
+        return ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.CAMERA
+        ) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestPermission() {
+        ActivityCompat.requestPermissions(
+                this,
+                CAMERA_PERMISSION,
+                CAMERA_REQUEST_CODE
+        );
+    }
+
+    private void enableCamera() {
+        //Intent intent = new Intent(this, BarcodeScannerActivity.class);
+        //startActivity(intent);
+        BarcodeScannerFragment barcodeScannerFragment = new BarcodeScannerFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, barcodeScannerFragment).commit();
+
+    }
+
+    HomepageFragment homepageFragment = new HomepageFragment();
     BooksListFragment booksListFragment = new BooksListFragment();
     MapsFragment mapsFragment = new MapsFragment();
 
@@ -44,11 +73,17 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public boolean onNavigationItemSelected(@NonNull MenuItem item){
         switch (item.getItemId()){
             case R.id.home_opt:
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, homepageFragment).commit();
                 return true;
             case R.id.book_opt:
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, booksListFragment).commit();
                 return true;
             case R.id.camera_opt:
+                if (hasCameraPermission()) {
+                    enableCamera();
+                } else {
+                    requestPermission();
+                }
                 return true;
             case R.id.map_opt:
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, mapsFragment).commit();

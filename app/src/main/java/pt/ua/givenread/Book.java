@@ -19,10 +19,15 @@ public class Book {
     @ColumnInfo(name = "image")
     public String image;
 
-    public Book(String book_title, String author, String image){
+    @NonNull
+    @ColumnInfo(name = "type")
+    public String type;
+
+    public Book(String book_title, String author, String image, String type){
         this.book_title = book_title;
         this.author = author;
         this.image = image;
+        this.type = type;
     }
 
     @NonNull
@@ -50,8 +55,17 @@ public class Book {
         this.image = image;
     }
 
+    @NonNull
+    public String getType() {
+        return type;
+    }
+
+    public void setType(@NonNull String type) {
+        this.type = type;
+    }
+
     @Override
     public String toString(){
-        return "[Book -> " + getBook_title() + ", " + getAuthor() + ", " + getImage() + "]";
+        return "[Book -> " + getBook_title() + ", " + getAuthor() + ", " + getImage() + ", " + getType() + "]";
     }
 }

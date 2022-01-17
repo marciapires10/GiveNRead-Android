@@ -23,7 +23,7 @@ import java.util.List;
 public class BooksListFragment extends Fragment {
 
     private BookSearchViewModel viewModel;
-    private BookListAdapter adapter;
+    private BookListAdapter adapter_list1, adapter_list2;
     private LinearLayoutManager HorizontalLayout;
     private Context context;
 
@@ -40,13 +40,22 @@ public class BooksListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        adapter = new BookListAdapter(new BookListAdapter.BookDiff());
+        adapter_list1 = new BookListAdapter(new BookListAdapter.BookDiff());
+        adapter_list2 = new BookListAdapter(new BookListAdapter.BookDiff());
 
         viewModel = ViewModelProviders.of(this).get(BookSearchViewModel.class);
         viewModel.init();
 
-        viewModel.getBooks().observe(this, books -> {
-            adapter.submitList(books);
+        /**viewModel.getBooks().observe(this, books -> {
+            adapter_list1.submitList(books);
+        });**/
+
+        viewModel.getBooksToGive().observe(this, books -> {
+            adapter_list1.submitList(books);
+        });
+
+        viewModel.getBooksToRead().observe(this, books -> {
+            adapter_list2.submitList(books);
         });
     }
 
@@ -60,16 +69,18 @@ public class BooksListFragment extends Fragment {
         recyclerView1.setLayoutManager(new LinearLayoutManager(getContext()));
         HorizontalLayout = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         recyclerView1.setLayoutManager(HorizontalLayout);
-        recyclerView1.setAdapter(adapter);
+        recyclerView1.setAdapter(adapter_list1);
 
-        bookTV = view.findViewById(R.id.book);
-        viewModel.getBooks().observe(getActivity(), books -> {
+        /**bookTV = view.findViewById(R.id.book);
+        viewModel.getBooksToGive().observe(getActivity(), books -> {
             bookTV.setText(books.toString());
-        });
+        });**/
 
-        //RecyclerView recyclerView2 = view.findViewById(R.id.fragment_bookList2_RecyclerView);
-        //recyclerView2.setLayoutManager(new LinearLayoutManager(getContext()));
-        //recyclerView2.setAdapter(adapter);
+        RecyclerView recyclerView2 = view.findViewById(R.id.fragment_bookList2_RecyclerView);
+        recyclerView1.setLayoutManager(new LinearLayoutManager(getContext()));
+        HorizontalLayout = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView2.setLayoutManager(HorizontalLayout);
+        recyclerView2.setAdapter(adapter_list2);
 
 
         // Button to add book to To Give list

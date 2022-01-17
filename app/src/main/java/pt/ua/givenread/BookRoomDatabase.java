@@ -12,7 +12,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Book.class}, version = 1, exportSchema = false)
+@Database(entities = {Book.class}, version = 3, exportSchema = true)
 public abstract class BookRoomDatabase extends RoomDatabase {
 
     private static volatile BookRoomDatabase INSTANCE;
@@ -25,6 +25,7 @@ public abstract class BookRoomDatabase extends RoomDatabase {
                 if (INSTANCE == null){
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             BookRoomDatabase.class, "book_table")
+                            .fallbackToDestructiveMigration()
                             .addCallback(sRoomDatabaseCallback)
                             .build();
                 }
@@ -46,8 +47,8 @@ public abstract class BookRoomDatabase extends RoomDatabase {
                 BookDao bookDao = INSTANCE.bookDao();
                 //bookDao.deleteAll();
 
-                Book word = new Book("Hello", "HP", "111");
-                bookDao.insert(word);
+               // Book word = new Book("Hello", "HP", "111");
+                //bookDao.insert(word);
             });
         }
     };

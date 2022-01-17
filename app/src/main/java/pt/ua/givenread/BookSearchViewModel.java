@@ -12,6 +12,9 @@ public class BookSearchViewModel extends AndroidViewModel {
     private BooksClient bookClient;
     private LiveData<VolumesResponse> volumeResponseLiveData;
     private LiveData<List<Book>> books;
+    private LiveData<List<Book>> booksToGive;
+    private LiveData<List<Book>> booksToRead;
+
 
     public BookSearchViewModel(@NonNull Application application) {
         super(application);
@@ -21,15 +24,25 @@ public class BookSearchViewModel extends AndroidViewModel {
         bookClient = new BooksClient(getApplication());
         volumeResponseLiveData = bookClient.getVolumesResponseLiveData();
         books = bookClient.getBooks();
+        booksToGive = bookClient.getBooksToGive();
+        booksToRead = bookClient.getBooksToRead();
     }
 
     public void searchBooks(String keyword){
         bookClient.searchBooks(keyword);
     }
 
+    public void searchBookByISBN(String isbn){
+        bookClient.searchBookByISBN(isbn);
+    }
+
     public LiveData<List<Book>> getBooks(){
         return books;
     }
+
+    public LiveData<List<Book>> getBooksToGive() { return booksToGive;}
+
+    public LiveData<List<Book>> getBooksToRead() { return booksToRead;}
 
     public void deleteAll(){
         bookClient.deleteAll();
