@@ -33,11 +33,11 @@
             android:id="@+id/addBookToGive">
         </Button>
 
-        <!--<Button
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/seeAllToGive"
-            android:text="See all"></Button>-->
+            android:text="See all"></Button>
 
         <TextView
             android:layout_width="match_parent"

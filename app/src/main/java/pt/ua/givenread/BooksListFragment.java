@@ -91,7 +91,7 @@ public class BooksListFragment extends Fragment {
         });
 
         // Button to see all list of To Give books
-        //seeAllTGButton = view.findViewById(R.id.seeAllToGive);
+        seeAllTGButton = view.findViewById(R.id.seeAllToGive);
 
         seeAllTGButton.setOnClickListener(v -> {
             BookListCompleteFragment fragment_tg = new BookListCompleteFragment();
