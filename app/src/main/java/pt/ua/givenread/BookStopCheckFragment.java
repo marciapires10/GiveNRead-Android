@@ -61,6 +61,10 @@ public class BookStopCheckFragment extends Fragment {
 
         scanBook.setOnClickListener(v -> {
             BarcodeScannerFragment fragment = new BarcodeScannerFragment();
+            Bundle args = new Bundle();
+            args.putString("BookStop", bookstop);
+            args.putString("CheckType", check_type);
+            fragment.setArguments(args);
             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
         });
 

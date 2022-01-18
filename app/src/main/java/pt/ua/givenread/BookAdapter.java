@@ -28,7 +28,9 @@ import java.util.ArrayList;
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> {
 
     private BookSearchViewModel viewModel;
-    private String type;
+    private String type; // or isbn
+    private String bookstop;
+    private String check_type;
     private ArrayList<Volume> bookResults = new ArrayList<>();
     private Context context;
 
@@ -36,12 +38,15 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
     DatabaseReference databaseReference;
 
     BookInfo bookToDB;
+    BookInfo.BookInfoFirebase bookInfoToDB;
 
-    public BookAdapter(Context context, BookSearchViewModel viewModel, String type){
+    public BookAdapter(Context context, BookSearchViewModel viewModel, String type, String bookstop, String check_type){
 
         this.context = context;
         this.viewModel = viewModel;
         this.type = type;
+        this.bookstop = bookstop;
+        this.check_type = check_type;
 
     }
 
@@ -105,21 +110,48 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
                 viewModel.insert(book);
             }
             else {
-                addDatatoFirebase(volume.getBookInfo().getTitle(), volume.getBookInfo().getAuthors());
+                if (check_type.equals("check-in")){
+                    addDatatoFirebase(volume.getBookInfo().getTitle(), volume.getBookInfo().getAuthors(), type, bookstop);
+                }
+                else{
+                    removeDataFromFirebase(type);
+                }
             }
 
         });
     }
 
-    private void addDatatoFirebase(String book_title, ArrayList<String> authors) {
+    private void addDatatoFirebase(String book_title, ArrayList<String> authors, String isbn, String bookstop) {
 
         bookToDB.setTitle(book_title);
         bookToDB.setAuthors(authors);
 
+        bookInfoToDB = new BookInfo.BookInfoFirebase(book_title, authors, isbn, bookstop);
+
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                databaseReference.push().setValue(bookToDB);
+                databaseReference.child(isbn).push().setValue(bookInfoToDB);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void removeDataFromFirebase(String isbn) {
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                BookInfo bookInfo = new BookInfo();
+                BookInfo.BookInfoFirebase bookInfoFB = new BookInfo.BookInfoFirebase();
+                bookInfoFB.setBookstop(bookstop);
+                bookInfoFB.setIsbn(isbn);
+
+               // databaseReference.equalTo(bookstop).removeValue();
             }
 
             @Override
@@ -130,6 +162,9 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
     }
 
     public int getItemCount(){
+        if (bookResults == null){
+            return 0;
+        }
         return bookResults.size();
     }
 

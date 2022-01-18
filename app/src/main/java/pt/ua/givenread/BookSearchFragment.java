@@ -50,7 +50,7 @@ public class BookSearchFragment extends Fragment {
         }
 
         viewModel = ViewModelProviders.of(this).get(BookSearchViewModel.class);
-        adapter = new BookAdapter(context, viewModel, type);
+        adapter = new BookAdapter(context, viewModel, type, "", "");
         viewModel.init();
         viewModel.getVolumeResponseLiveData().observe(this, volumesResponse -> {
             if (volumesResponse != null) {

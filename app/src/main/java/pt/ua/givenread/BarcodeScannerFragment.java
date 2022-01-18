@@ -43,6 +43,9 @@ public class BarcodeScannerFragment extends Fragment {
     private PreviewView previewView;
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
 
+    private String bookstop;
+    private String check_type;
+
     public BarcodeScannerFragment() {
         // Required empty public constructor
     }
@@ -50,7 +53,13 @@ public class BarcodeScannerFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
+        if (getArguments() != null && getArguments().containsKey("BookStop") && getArguments().containsKey("CheckType")) {
+            bookstop = getArguments().getString("BookStop");
+            check_type = getArguments().getString("CheckType");
+        }
     }
 
     @Override
@@ -127,6 +136,10 @@ public class BarcodeScannerFragment extends Fragment {
                                                              ISBNResultFragment fragment = new ISBNResultFragment();
                                                              Bundle args = new Bundle();
                                                              args.putString("ISBNResult", rawValue);
+                                                             Log.d("BOOKSTOP", bookstop);
+                                                             args.putString("BookStop", bookstop);
+                                                             Log.d("CHECK TYPE", check_type);
+                                                             args.putString("CheckType", check_type);
                                                              fragment.setArguments(args);
                                                              getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                                                              break;

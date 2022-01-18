@@ -130,6 +130,23 @@ public class BookInfo {
         this.buyLink = buyLink;
     }
 
+    @Override
+    public String toString() {
+        return "BookInfo{" +
+                "title='" + title + '\'' +
+                ", subtitle='" + subtitle + '\'' +
+                ", authors=" + authors +
+                ", publisher='" + publisher + '\'' +
+                ", publishedDate='" + publishedDate + '\'' +
+                ", description='" + description + '\'' +
+                ", pageCount=" + pageCount +
+                ", imageLinks=" + imageLinks +
+                ", previewLink='" + previewLink + '\'' +
+                ", infoLink='" + infoLink + '\'' +
+                ", buyLink='" + buyLink + '\'' +
+                '}';
+    }
+
     public BookInfo() {
 
     }
@@ -147,4 +164,77 @@ public class BookInfo {
         this.infoLink = infoLink;
         this.buyLink = buyLink;
     }
+
+    static class BookInfoFirebase{
+        @SerializedName("book_title")
+        @Expose
+        String book_title;
+
+        @SerializedName("authors")
+        @Expose
+        ArrayList<String> authors;
+
+        @SerializedName("isbn")
+        @Expose
+        String isbn;
+
+        @SerializedName("bookstop")
+        @Expose
+        String bookstop;
+
+        public String getBook_title() {
+            return book_title;
+        }
+
+        public void setBook_title(String book_title) {
+            this.book_title = book_title;
+        }
+
+        public ArrayList<String> getAuthors() {
+            return authors;
+        }
+
+        public void setAuthors(ArrayList<String> authors) {
+            this.authors = authors;
+        }
+
+        public String getIsbn() {
+            return isbn;
+        }
+
+        public void setIsbn(String isbn) {
+            this.isbn = isbn;
+        }
+
+        public String getBookstop() {
+            return bookstop;
+        }
+
+        public void setBookstop(String bookstop) {
+            this.bookstop = bookstop;
+        }
+
+        @Override
+        public String toString() {
+            return "BookInfoFirebase{" +
+                    "book_title='" + book_title + '\'' +
+                    ", authors=" + authors +
+                    ", isbn='" + isbn + '\'' +
+                    ", bookstop='" + bookstop + '\'' +
+                    '}';
+        }
+
+        public BookInfoFirebase(){
+
+        }
+
+        public BookInfoFirebase(String book_title, ArrayList<String> authors, String isbn, String bookstop) {
+            this.book_title = book_title;
+            this.authors = authors;
+            this.isbn = isbn;
+            this.bookstop = bookstop;
+        }
+    }
 }
+
+

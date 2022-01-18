@@ -16,7 +16,9 @@ import android.widget.TextView;
 
 public class ISBNResultFragment extends Fragment {
 
-    private String isbnResult = "";
+    private String isbnResult;
+    private String bookstop;
+    private String check_type;
     private TextView isbnTV;
 
     private BookSearchViewModel viewModel;
@@ -31,12 +33,14 @@ public class ISBNResultFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null && getArguments().containsKey("ISBNResult")) {
+        if (getArguments() != null && getArguments().containsKey("ISBNResult") && getArguments().containsKey("BookStop") && getArguments().containsKey("CheckType")) {
             isbnResult = getArguments().getString("ISBNResult");
+            bookstop = getArguments().getString("BookStop");
+            check_type = getArguments().getString("CheckType");
         }
 
         viewModel = ViewModelProviders.of(this).get(BookSearchViewModel.class);
-        adapter = new BookAdapter(context, viewModel, isbnResult);
+        adapter = new BookAdapter(context, viewModel, isbnResult, bookstop, check_type);
         viewModel.init();
         viewModel.getVolumeResponseLiveData().observe(this, volumesResponse -> {
             if (volumesResponse != null) {
