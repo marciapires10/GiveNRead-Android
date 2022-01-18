@@ -16,6 +16,7 @@
             android:id="@+id/idIVbook"
             android:layout_width="130dp"
             android:layout_height="160dp"
+            android:contentDescription="book cover"
             android:layout_margin="10dp" />
 
         <TextView
@@ -55,13 +56,13 @@
             android:textSize="11sp" />
 
         <Button
+            android:id="@+id/add_book_to_list"
             android:layout_width="113dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="200dp"
             android:layout_marginTop="120dp"
             android:padding="3dp"
-            android:id="@+id/add_book_to_list"
-            android:text="ADD"></Button>
+            android:text="ADD" />
 
     </RelativeLayout>
 

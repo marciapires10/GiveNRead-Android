@@ -65,7 +65,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         holder.publisherTV.setText(volume.getBookInfo().getPublisher());
         holder.pageCountTV.setText("No of pages: " + volume.getBookInfo().getPageCount());
         holder.add_book_to_list.setId(pos);
-        holder.add_book_to_list.setText(String.valueOf(pos));
+        holder.add_book_to_list.setText("add");
 
         if (volume.getBookInfo().getThumbnail() != null){
             String imageUrl = volume.getBookInfo().getThumbnail().getSmallThumbnail().replace("http://", "https://");
@@ -94,6 +94,10 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         databaseReference = firebaseDatabase.getReference("BookInfo");
 
         bookToDB = new BookInfo();
+
+        if(check_type.equals("check-out")){
+            holder.add_book_to_list.setText("remove");
+        }
 
 
         holder.add_book_to_list.setOnClickListener(v -> {
@@ -143,15 +147,18 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
     private void removeDataFromFirebase(String isbn) {
 
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        Log.d("bookstop", bookstop);
+
+        databaseReference.child(isbn).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                BookInfo bookInfo = new BookInfo();
-                BookInfo.BookInfoFirebase bookInfoFB = new BookInfo.BookInfoFirebase();
-                bookInfoFB.setBookstop(bookstop);
-                bookInfoFB.setIsbn(isbn);
+                for (DataSnapshot s : snapshot.getChildren()){
+                    if(s.child("bookstop").getValue().toString().equals(bookstop)){
+                        s.getRef().removeValue();
+                    }
+                }
 
-               // databaseReference.equalTo(bookstop).removeValue();
+               // databaseReference.child(isbn).removeValue();
             }
 
             @Override
