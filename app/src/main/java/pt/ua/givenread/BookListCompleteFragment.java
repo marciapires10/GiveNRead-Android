@@ -17,6 +17,7 @@ public class BookListCompleteFragment extends Fragment {
     private String type = "";
     private BookListAdapter adapter;
     private BookSearchViewModel viewModel;
+    private LinearLayoutManager HorizontalLayout;
 
     public BookListCompleteFragment() {
         // Required empty public constructor

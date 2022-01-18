@@ -74,7 +74,7 @@ public class BooksListFragment extends Fragment {
         });**/
 
         RecyclerView recyclerView2 = view.findViewById(R.id.fragment_bookList2_RecyclerView);
-        recyclerView1.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView2.setLayoutManager(new LinearLayoutManager(getContext()));
         HorizontalLayout = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         recyclerView2.setLayoutManager(HorizontalLayout);
         recyclerView2.setAdapter(adapter_list2);
