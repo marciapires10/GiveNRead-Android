@@ -45,9 +45,6 @@ public class BookSearchFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /**if (getArguments().containsKey("type")) {
-         type = getArguments().getString("type");
-        }*/
         if (getArguments() != null && getArguments().containsKey("type")) {
             type = getArguments().getString("type");
         }
@@ -55,12 +52,9 @@ public class BookSearchFragment extends Fragment {
         viewModel = ViewModelProviders.of(this).get(BookSearchViewModel.class);
         adapter = new BookAdapter(context, viewModel, type);
         viewModel.init();
-        viewModel.getVolumeResponseLiveData().observe(this, new Observer<VolumesResponse>() {
-            @Override
-            public void onChanged(VolumesResponse volumesResponse) {
-                if (volumesResponse != null) {
-                    adapter.setBookResults(volumesResponse.getItems());
-                }
+        viewModel.getVolumeResponseLiveData().observe(this, volumesResponse -> {
+            if (volumesResponse != null) {
+                adapter.setBookResults(volumesResponse.getItems());
             }
         });
     }
@@ -79,19 +73,7 @@ public class BookSearchFragment extends Fragment {
         searchButton = view.findViewById(R.id.fragment_booksearch_search);
         searchISBNButton = view.findViewById(R.id.fragment_booksearch_isbn);
 
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                performSearch();
-            }
-        });
-
-        searchISBNButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                performSearchByISBN();
-            }
-        });
+        searchButton.setOnClickListener(v -> performSearch());
 
         return view;
     }
@@ -103,8 +85,8 @@ public class BookSearchFragment extends Fragment {
         viewModel.searchBooks(keyword);
     }
 
-    public void performSearchByISBN(){
-        String isbn = isbnEditText.getEditableText().toString();
+    public void performSearchByISBN(String isbn){
+        //String isbn = isbnEditText.getEditableText().toString();
 
         viewModel.searchBookByISBN("isbn:" + isbn);
     }

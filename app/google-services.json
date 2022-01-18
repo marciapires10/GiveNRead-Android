@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "71360378523",
+    "project_id": "givenread-android",
+    "storage_bucket": "givenread-android.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:71360378523:android:e6f0fd3e5ae5148e48783e",
+        "android_client_info": {
+          "package_name": "pt.ua.givenread"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "71360378523-t3qk4u3289elrk0ua7viobpf0ojcnebq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2XoL_ITUS4hZHWW9zLnQUx1MY2zfspV0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "71360378523-t3qk4u3289elrk0ua7viobpf0ojcnebq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

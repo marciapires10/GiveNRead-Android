@@ -130,6 +130,10 @@ public class BookInfo {
         this.buyLink = buyLink;
     }
 
+    public BookInfo() {
+
+    }
+
     public BookInfo(String title, String subtitle, ArrayList<String> authors, String publisher, String publishedDate, String description, int pageCount, VolumeImageLinks imageLinks, String previewLink, String infoLink, String buyLink) {
         this.title = title;
         this.subtitle = subtitle;

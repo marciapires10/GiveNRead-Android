@@ -1,7 +1,10 @@
 package pt.ua.givenread;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.FragmentManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -45,7 +48,8 @@ public final class QrCodeAnalyzer implements ImageAnalysis.Analyzer {
     @Override
     public void analyze(ImageProxy image) {
 
-        @SuppressLint("UnsafeOptInUsageError") Image img = image.getImage();
+        @SuppressLint("UnsafeOptInUsageError")
+        Image img = image.getImage();
 
         if (img != null) {
             InputImage inputImage = InputImage.fromMediaImage(img, image.getImageInfo().getRotationDegrees());
@@ -56,50 +60,52 @@ public final class QrCodeAnalyzer implements ImageAnalysis.Analyzer {
 
             scanner.process(inputImage)
                     .addOnSuccessListener(
-                            (new OnSuccessListener<List<Barcode>>() {
-                                @Override
-                                public void onSuccess(List<Barcode> barcodes) {
-                                    // Task completed successfully
-                                    for (Barcode barcode: barcodes){
-                                        Rect bounds = barcode.getBoundingBox();
-                                        Point[] corners = barcode.getCornerPoints();
+                            barcodes -> {
+                                // Task completed successfully
+                                for (Barcode barcode: barcodes){
+                                    Rect bounds = barcode.getBoundingBox();
+                                    Point[] corners = barcode.getCornerPoints();
 
-                                        String rawValue = barcode.getRawValue();
+                                    String rawValue = barcode.getRawValue();
 
-                                        Log.d("RAWVALUE", rawValue);
+                                    Log.d("RAWVALUE", rawValue);
 
-                                        if (barcodes.size() == 1){
-                                            Toast.makeText(context, rawValue, Toast.LENGTH_SHORT).show();
-                                            //Intent intent = new Intent(context, MainActivity.class);
-                                            //context.startActivity(intent);
-                                        }
-
-                                        /**rectPaint = new Paint();
-                                        rectPaint.setColor(boxColor);
-                                        rectPaint.setStyle(Paint.Style.STROKE);
-                                        rectPaint.setStrokeWidth(strokeWidth);
-
-                                        Canvas canvas = new Canvas();
-                                        RectF rect = new RectF(bounds);
-                                        canvas.drawRect(rect, rectPaint);**/
+                                    if (barcodes.size() > 0 && rawValue != null){
+                                        //Toast.makeText(context, rawValue, Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(context, BookSearchActivity.class);
+                                        context.startActivity(intent);
+                                        //HomepageFragment homepageFragment = new HomepageFragment();
+                                        //getSupportFragmentManager().beginTransaction().replace(R.id.container, homepageFragment).commit();
 
 
-                                        /**int valueType = barcode.getValueType();
-                                        // See API reference for complete list of supported types
-                                        switch (valueType) {
-                                            case Barcode.TYPE_WIFI:
-                                                String ssid = barcode.getWifi().getSsid();
-                                                String password = barcode.getWifi().getPassword();
-                                                int type = barcode.getWifi().getEncryptionType();
-                                                break;
-                                            case Barcode.TYPE_URL:
-                                                String title = barcode.getUrl().getTitle();
-                                                String url = barcode.getUrl().getUrl();
-                                                break;
-                                        }**/
+                                        Log.d("GO TO", "Main Activity");
                                     }
+
+                                    /**rectPaint = new Paint();
+                                    rectPaint.setColor(boxColor);
+                                    rectPaint.setStyle(Paint.Style.STROKE);
+                                    rectPaint.setStrokeWidth(strokeWidth);
+
+                                    Canvas canvas = new Canvas();
+                                    RectF rect = new RectF(bounds);
+                                    canvas.drawRect(rect, rectPaint);**/
+
+
+                                    /**int valueType = barcode.getValueType();
+                                    // See API reference for complete list of supported types
+                                    switch (valueType) {
+                                        case Barcode.TYPE_WIFI:
+                                            String ssid = barcode.getWifi().getSsid();
+                                            String password = barcode.getWifi().getPassword();
+                                            int type = barcode.getWifi().getEncryptionType();
+                                            break;
+                                        case Barcode.TYPE_URL:
+                                            String title = barcode.getUrl().getTitle();
+                                            String url = barcode.getUrl().getUrl();
+                                            break;
+                                    }**/
                                 }
-                            })
+                            }
                     ).addOnCompleteListener(new OnCompleteListener<List<Barcode>>() {
                 @Override
                 public void onComplete(@NonNull Task<List<Barcode>> task) {

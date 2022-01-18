@@ -1,5 +1,10 @@
 package pt.ua.givenread;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.graphics.Point;
+import android.graphics.Rect;
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,14 +15,27 @@ import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.util.Size;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.common.util.concurrent.ListenableFuture;
+import com.google.mlkit.vision.barcode.BarcodeScanner;
+import com.google.mlkit.vision.barcode.BarcodeScannerOptions;
+import com.google.mlkit.vision.barcode.BarcodeScanning;
+import com.google.mlkit.vision.barcode.common.Barcode;
+import com.google.mlkit.vision.common.InputImage;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class BarcodeScannerFragment extends Fragment {
@@ -29,12 +47,6 @@ public class BarcodeScannerFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static BarcodeScannerFragment newInstance(String param1, String param2) {
-        BarcodeScannerFragment fragment = new BarcodeScannerFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,7 +83,102 @@ public class BarcodeScannerFragment extends Fragment {
         ImageAnalysis imageAnalysis =
                 new ImageAnalysis.Builder().setTargetResolution(new Size(1280, 720))
                         .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST).build();
-        imageAnalysis.setAnalyzer(ContextCompat.getMainExecutor(getContext()), new QrCodeAnalyzer(getContext()));
+        imageAnalysis.setAnalyzer(ContextCompat.getMainExecutor(getContext()),
+                imageProxy -> {
+                    @SuppressLint("UnsafeOptInUsageError") Image img = imageProxy.getImage();
+
+                    if (img != null) {
+                        InputImage inputImage = InputImage.fromMediaImage(img, imageProxy.getImageInfo().getRotationDegrees());
+
+                        BarcodeScannerOptions options = new BarcodeScannerOptions.Builder().setBarcodeFormats(Barcode.FORMAT_ALL_FORMATS).build();
+
+                        BarcodeScanner scanner = BarcodeScanning.getClient(options);
+
+                        scanner.process(inputImage)
+                                .addOnSuccessListener(
+                                        barcodes -> {
+                                            // Task completed successfully
+                                            for (Barcode barcode: barcodes){
+                                                Rect bounds = barcode.getBoundingBox();
+                                                Point[] corners = barcode.getCornerPoints();
+
+                                                String rawValue = barcode.getRawValue();
+                                                Log.d("format", String.valueOf(barcode.getFormat()));
+
+                                                 int valueType = barcode.getValueType();
+                                                 Log.d("valueType", String.valueOf(valueType));
+
+                                                 if (barcodes.size() > 0 && rawValue != null){
+                                                     switch (valueType) {
+                                                         case Barcode.TYPE_TEXT:
+                                                             Log.d("TYPE", "qrcode");
+                                                             BookStopCheckFragment bookStopCheckFragment = new BookStopCheckFragment();
+                                                             Bundle qrcode_args = new Bundle();
+                                                             qrcode_args.putString("ScanResult", rawValue);
+                                                             bookStopCheckFragment.setArguments(qrcode_args);
+                                                             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, bookStopCheckFragment).commit();
+                                                             break;
+                                                         case Barcode.TYPE_ISBN:
+                                                             Log.d("TYP2", "isbn");
+                                                             //Intent intent = new Intent(getContext(), BookSearchActivity.class);
+                                                             //intent.putExtra("type", rawValue);
+                                                             //startActivity(intent);
+
+                                                             ISBNResultFragment fragment = new ISBNResultFragment();
+                                                             Bundle args = new Bundle();
+                                                             args.putString("ISBNResult", rawValue);
+                                                             fragment.setArguments(args);
+                                                             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                                                             break;
+                                                     }
+                                                 }
+
+                                                Log.d("RAWVALUE", rawValue);
+
+                                                /**if (barcodes.size() > 0 && rawValue != null){
+                                                    //Toast.makeText(context, rawValue, Toast.LENGTH_SHORT).show();
+                                                    //Intent intent = new Intent(getContext(), BookSearchActivity.class);
+                                                    //getContext().startActivity(intent);
+                                                    BookStopCheckFragment fragment = new BookStopCheckFragment();
+                                                    Bundle args = new Bundle();
+                                                    args.putString("ScanResult", rawValue);
+                                                    fragment.setArguments(args);
+                                                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+
+
+
+                                                    Log.d("GO TO", "Main Activity");
+                                                }**/
+
+                                                /**rectPaint = new Paint();
+                                                 rectPaint.setColor(boxColor);
+                                                 rectPaint.setStyle(Paint.Style.STROKE);
+                                                 rectPaint.setStrokeWidth(strokeWidth);
+
+                                                 Canvas canvas = new Canvas();
+                                                 RectF rect = new RectF(bounds);
+                                                 canvas.drawRect(rect, rectPaint);**/
+
+
+                                                /**int valueType = barcode.getValueType();
+                                                 // See API reference for complete list of supported types
+                                                 switch (valueType) {
+                                                 case Barcode.TYPE_WIFI:
+                                                 String ssid = barcode.getWifi().getSsid();
+                                                 String password = barcode.getWifi().getPassword();
+                                                 int type = barcode.getWifi().getEncryptionType();
+                                                 break;
+                                                 case Barcode.TYPE_URL:
+                                                 String title = barcode.getUrl().getTitle();
+                                                 String url = barcode.getUrl().getUrl();
+                                                 break;
+                                                 }**/
+                                            }
+                                        }
+                                ).addOnCompleteListener(task -> imageProxy.close())
+                                .addOnFailureListener(e -> e.printStackTrace());
+                    }
+                });
 
         Preview preview = new Preview.Builder().build();
         CameraSelector cameraSelector = new CameraSelector.Builder()

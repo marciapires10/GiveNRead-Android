@@ -28,8 +28,9 @@ public class BooksListFragment extends Fragment {
     private Context context;
 
     private Button addTGButton;
+    private Button seeAllTGButton;
     private Button addTRButton;
-    private TextView bookTV;
+    private Button seeAllTRButton;
 
 
     public BooksListFragment() {
@@ -50,13 +51,9 @@ public class BooksListFragment extends Fragment {
             adapter_list1.submitList(books);
         });**/
 
-        viewModel.getBooksToGive().observe(this, books -> {
-            adapter_list1.submitList(books);
-        });
+        viewModel.getBooksToGive().observe(this, books -> adapter_list1.submitList(books));
 
-        viewModel.getBooksToRead().observe(this, books -> {
-            adapter_list2.submitList(books);
-        });
+        viewModel.getBooksToRead().observe(this, books -> adapter_list2.submitList(books));
     }
 
     @Override
@@ -93,6 +90,17 @@ public class BooksListFragment extends Fragment {
             mcontext.startActivity(intent);
         });
 
+        // Button to see all list of To Give books
+        //seeAllTGButton = view.findViewById(R.id.seeAllToGive);
+
+        seeAllTGButton.setOnClickListener(v -> {
+            BookListCompleteFragment fragment_tg = new BookListCompleteFragment();
+            Bundle type_tg = new Bundle();
+            type_tg.putString("Type", "ToGive");
+            fragment_tg.setArguments(type_tg);
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment_tg).commit();
+        });
+
         // Button to add book to To Read list
         addTRButton = view.findViewById(R.id.addBookToRead);
 
@@ -101,6 +109,17 @@ public class BooksListFragment extends Fragment {
             Intent intent = new Intent(mcontext, BookSearchActivity.class);
             intent.putExtra("type", "ToRead");
             mcontext.startActivity(intent);
+        });
+
+        // Button to see all list of To Read books
+        seeAllTRButton = view.findViewById(R.id.seeAllToRead);
+
+        seeAllTRButton.setOnClickListener(v -> {
+            BookListCompleteFragment fragment_tr = new BookListCompleteFragment();
+            Bundle type_tr = new Bundle();
+            type_tr.putString("Type", "ToRead");
+            fragment_tr.setArguments(type_tr);
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment_tr).commit();
         });
 
 

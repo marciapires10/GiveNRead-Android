@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:fillViewport="true">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,13 +20,6 @@
             android:textSize="24sp">
         </TextView>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/book"
-            android:textColor="@color/black">
-        </TextView>
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/fragment_bookList1_RecyclerView"
             android:scrollbars="horizontal"
@@ -39,6 +32,12 @@
             android:text="Add"
             android:id="@+id/addBookToGive">
         </Button>
+
+        <!--<Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/seeAllToGive"
+            android:text="See all"></Button>-->
 
         <TextView
             android:layout_width="match_parent"
@@ -59,6 +58,12 @@
             android:text="Add"
             android:id="@+id/addBookToRead">
         </Button>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/seeAllToRead"
+            android:text="see all"></Button>
 
 
     </LinearLayout>
