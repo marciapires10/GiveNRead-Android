@@ -20,12 +20,12 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class BookSearchFragment extends Fragment {
 
-    private BookSearchViewModel viewModel;
+    private BookViewModel viewModel;
     private BookAdapter adapter;
     private Context context;
 
-    private TextInputEditText keywordEditText, isbnEditText;
-    private Button searchButton, searchISBNButton;
+    private TextInputEditText keywordEditText;
+    private Button searchButton;
 
     private String type = "";
 
@@ -49,7 +49,7 @@ public class BookSearchFragment extends Fragment {
             type = getArguments().getString("type");
         }
 
-        viewModel = ViewModelProviders.of(this).get(BookSearchViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(BookViewModel.class);
         adapter = new BookAdapter(context, viewModel, type, "", "");
         viewModel.init();
         viewModel.getVolumeResponseLiveData().observe(this, volumesResponse -> {
@@ -69,9 +69,7 @@ public class BookSearchFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         keywordEditText = view.findViewById(R.id.fragment_booksearch_keyword);
-        isbnEditText = view.findViewById(R.id.fragment_booksearch_bisbn);
         searchButton = view.findViewById(R.id.fragment_booksearch_search);
-        searchISBNButton = view.findViewById(R.id.fragment_booksearch_isbn);
 
         searchButton.setOnClickListener(v -> performSearch());
 
@@ -80,14 +78,7 @@ public class BookSearchFragment extends Fragment {
 
     public void performSearch() {
         String keyword = keywordEditText.getEditableText().toString();
-        //String author = authorEditText.getEditableText().toString();
 
         viewModel.searchBooks(keyword);
-    }
-
-    public void performSearchByISBN(String isbn){
-        //String isbn = isbnEditText.getEditableText().toString();
-
-        viewModel.searchBookByISBN("isbn:" + isbn);
     }
 }

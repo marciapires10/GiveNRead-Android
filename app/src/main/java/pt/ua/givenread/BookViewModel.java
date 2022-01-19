@@ -8,7 +8,7 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-public class BookSearchViewModel extends AndroidViewModel {
+public class BookViewModel extends AndroidViewModel {
     private BooksClient bookClient;
     private LiveData<VolumesResponse> volumeResponseLiveData;
     private LiveData<List<Book>> books;
@@ -16,7 +16,7 @@ public class BookSearchViewModel extends AndroidViewModel {
     private LiveData<List<Book>> booksToRead;
 
 
-    public BookSearchViewModel(@NonNull Application application) {
+    public BookViewModel(@NonNull Application application) {
         super(application);
     }
 

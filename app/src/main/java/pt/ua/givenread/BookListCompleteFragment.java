@@ -16,7 +16,7 @@ public class BookListCompleteFragment extends Fragment {
 
     private String type = "";
     private BookListAdapter adapter;
-    private BookSearchViewModel viewModel;
+    private BookViewModel viewModel;
     private LinearLayoutManager HorizontalLayout;
 
     public BookListCompleteFragment() {
@@ -30,7 +30,7 @@ public class BookListCompleteFragment extends Fragment {
             type = getArguments().getString("Type");
         }
 
-        viewModel = ViewModelProviders.of(this).get(BookSearchViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(BookViewModel.class);
         viewModel.init();
         adapter = new BookListAdapter(new BookListAdapter.BookDiff());
 

@@ -12,7 +12,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Book.class}, version = 3, exportSchema = true)
+@Database(entities = {Book.class}, version = 3, exportSchema = false)
 public abstract class BookRoomDatabase extends RoomDatabase {
 
     private static volatile BookRoomDatabase INSTANCE;

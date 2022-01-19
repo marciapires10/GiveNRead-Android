@@ -22,7 +22,7 @@ import java.util.List;
 
 public class BooksListFragment extends Fragment {
 
-    private BookSearchViewModel viewModel;
+    private BookViewModel viewModel;
     private BookListAdapter adapter_list1, adapter_list2;
     private LinearLayoutManager HorizontalLayout;
     private Context context;
@@ -44,7 +44,7 @@ public class BooksListFragment extends Fragment {
         adapter_list1 = new BookListAdapter(new BookListAdapter.BookDiff());
         adapter_list2 = new BookListAdapter(new BookListAdapter.BookDiff());
 
-        viewModel = ViewModelProviders.of(this).get(BookSearchViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(BookViewModel.class);
         viewModel.init();
 
         /**viewModel.getBooks().observe(this, books -> {

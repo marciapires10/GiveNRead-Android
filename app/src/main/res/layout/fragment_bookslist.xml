@@ -1,70 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
 
-    <LinearLayout
-        xmlns:tools="http://schemas.android.com/tools"
+    <GridLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_margin="8dp"
         android:orientation="vertical"
+        android:rowCount="4"
+        android:columnCount="2"
         tools:context=".BooksListFragment">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/to_give"
+            android:layout_row="0"
+            android:layout_column="0"
             android:textSize="24sp">
         </TextView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/fragment_bookList1_RecyclerView"
             android:scrollbars="horizontal"
-            android:layout_width="match_parent"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:layout_width="250dp"
             android:layout_height="wrap_content" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Add"
+            android:layout_row="1"
+            android:layout_column="1"
+            android:layout_marginStart="10dp"
             android:id="@+id/addBookToGive">
         </Button>
 
         <Button
+            android:id="@+id/seeAllToGive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/seeAllToGive"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:background="@android:color/transparent"
+            android:textColor="@color/black"
+            android:textSize="10dp"
             android:text="See all"></Button>
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/to_read"
+            android:layout_row="2"
+            android:layout_column="0"
             android:textSize="24sp">
         </TextView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/fragment_bookList2_RecyclerView"
             android:scrollbars="horizontal"
-            android:layout_width="match_parent"
+            android:layout_row="3"
+            android:layout_column="0"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Add"
+            android:layout_row="3"
+            android:layout_column="1"
+            android:layout_marginTop="50dp"
+            android:layout_marginStart="10dp"
             android:id="@+id/addBookToRead">
         </Button>
 
         <Button
+            android:id="@+id/seeAllToRead"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/seeAllToRead"
+            android:layout_row="2"
+            android:layout_column="1"
+            android:background="@android:color/transparent"
+            android:textColor="@color/black"
+            android:textSize="10dp"
             android:text="see all"></Button>
 
 
-    </LinearLayout>
+    </GridLayout>
 </ScrollView>

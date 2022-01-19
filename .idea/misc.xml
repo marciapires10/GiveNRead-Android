@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/ic_camera_foreground.xml" value="0.23697916666666666" />
+        <entry key="app/src/main/res/drawable/ic_coverNotAvailable_background.xml" value="0.1765625" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.23697916666666666" />
         <entry key="app/src/main/res/drawable/ic_search.xml" value="0.10925925925925926" />
         <entry key="app/src/main/res/layout/activity_barcode_scanner.xml" value="0.1331521739130435" />
@@ -12,18 +13,22 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_maps.xml" value="0.16145833333333334" />
         <entry key="app/src/main/res/layout/book_item.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/book_item_list.xml" value="0.1703125" />
         <entry key="app/src/main/res/layout/book_item_prev.xml" value="0.33" />
         <entry key="app/src/main/res/layout/book_search.xml" value="0.3129528985507246" />
         <entry key="app/src/main/res/layout/fragment_barcode_scanner.xml" value="0.23020833333333332" />
         <entry key="app/src/main/res/layout/fragment_book_list_complete.xml" value="0.19791666666666666" />
         <entry key="app/src/main/res/layout/fragment_book_stop_check.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_booksearch.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_bookslist.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_bookslist.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_homepage.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_isbn_result.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_maps.xml" value="0.1" />
         <entry key="app/src/main/res/layout/mynavgraph.xml" value="0.1" />
         <entry key="app/src/main/res/menu/bottom_navbar.xml" value="0.22083333333333333" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_coverNotAvailable.xml" value="0.22916666666666666" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_coverNotAvailable_round.xml" value="0.22916666666666666" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_covernotavailable.xml" value="0.22916666666666666" />
       </map>
     </option>
   </component>

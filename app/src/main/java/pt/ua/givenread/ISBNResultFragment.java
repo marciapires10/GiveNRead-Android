@@ -21,7 +21,7 @@ public class ISBNResultFragment extends Fragment {
     private String check_type;
     private TextView isbnTV;
 
-    private BookSearchViewModel viewModel;
+    private BookViewModel viewModel;
     private BookAdapter adapter;
     private Context context;
 
@@ -39,7 +39,7 @@ public class ISBNResultFragment extends Fragment {
             check_type = getArguments().getString("CheckType");
         }
 
-        viewModel = ViewModelProviders.of(this).get(BookSearchViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(BookViewModel.class);
         adapter = new BookAdapter(context, viewModel, isbnResult, bookstop, check_type);
         viewModel.init();
         viewModel.getVolumeResponseLiveData().observe(this, volumesResponse -> {

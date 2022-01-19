@@ -2,6 +2,8 @@ package pt.ua.givenread;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,11 +25,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> {
 
-    private BookSearchViewModel viewModel;
+    private BookViewModel viewModel;
     private String type; // or isbn
     private String bookstop;
     private String check_type;
@@ -40,7 +44,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
     BookInfo bookToDB;
     BookInfo.BookInfoFirebase bookInfoToDB;
 
-    public BookAdapter(Context context, BookSearchViewModel viewModel, String type, String bookstop, String check_type){
+    public BookAdapter(Context context, BookViewModel viewModel, String type, String bookstop, String check_type){
 
         this.context = context;
         this.viewModel = viewModel;
@@ -59,7 +63,6 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull BookViewHolder holder, int pos){
-        Log.d("pos", String.valueOf(pos));
         Volume volume = bookResults.get(pos);
         holder.nameTV.setText(volume.getBookInfo().getTitle());
         holder.publisherTV.setText(volume.getBookInfo().getPublisher());
@@ -70,6 +73,11 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         if (volume.getBookInfo().getThumbnail() != null){
             String imageUrl = volume.getBookInfo().getThumbnail().getSmallThumbnail().replace("http://", "https://");
             Picasso.get().load(imageUrl).into(holder.bookIV);
+        }
+        else {
+            Log.d("no image", "no image");
+            //Drawable d = context.getResources().getDrawable(R.drawable.ic_books_background);
+            //holder.bookIV.setImageDrawable(d);
         }
 
         holder.itemView.setOnClickListener(v -> {
