@@ -79,6 +79,8 @@ public class BookSearchFragment extends Fragment {
     public void performSearch() {
         String keyword = keywordEditText.getEditableText().toString();
 
+        Log.d("keyword", keyword);
+
         viewModel.searchBooks(keyword);
     }
 }

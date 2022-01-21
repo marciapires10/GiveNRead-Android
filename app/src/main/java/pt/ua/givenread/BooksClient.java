@@ -8,8 +8,16 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 
-import java.util.List;
+import com.google.common.util.concurrent.ListenableFuture;
 
+import org.intellij.lang.annotations.Flow;
+
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.function.Consumer;
+
+import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,7 +44,6 @@ public class BooksClient {
         books = bookDao.getAll();
         booksToGive = bookDao.getAllToGive();
         booksToRead = bookDao.getAllToRead();
-
     }
 
     public void searchBooks(String keyword){
@@ -52,6 +59,7 @@ public class BooksClient {
             @Override
             public void onFailure(@NonNull Call<VolumesResponse> call, @NonNull Throwable t) {
                 volumeResponseLiveData.postValue(null);
+                Log.d("error", String.valueOf(t));
             }
         });
     }
@@ -89,6 +97,7 @@ public class BooksClient {
         return booksToRead;
     }
 
+
     void deleteAll(){
         BookRoomDatabase.databaseWriteExecutor.execute(() -> {
             bookDao.deleteAll();
@@ -99,5 +108,23 @@ public class BooksClient {
         BookRoomDatabase.databaseWriteExecutor.execute(() -> {
             bookDao.insert(book);
         });
+    }
+
+    public List<Book> getAllToReadList() throws ExecutionException, InterruptedException {
+        return new getAllAsyncTask(bookDao).execute().get();
+    }
+
+    private static class getAllAsyncTask extends android.os.AsyncTask<Void, Void, List<Book>> {
+
+        private BookDao mAsyncTaskDao;
+
+        getAllAsyncTask(BookDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected List<Book> doInBackground(Void... voids) {
+            return mAsyncTaskDao.getAllToReadList();
+        }
     }
 }

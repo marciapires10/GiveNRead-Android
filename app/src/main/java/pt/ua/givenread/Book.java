@@ -16,6 +16,10 @@ public class Book {
     @ColumnInfo(name = "author")
     public String author;
 
+    @NonNull
+    @ColumnInfo(name = "isbn")
+    public String isbn;
+
     @ColumnInfo(name = "image")
     public String image;
 
@@ -23,9 +27,10 @@ public class Book {
     @ColumnInfo(name = "type")
     public String type;
 
-    public Book(String book_title, String author, String image, String type){
+    public Book(String book_title, String author, String isbn, String image, String type){
         this.book_title = book_title;
         this.author = author;
+        this.isbn = isbn;
         this.image = image;
         this.type = type;
     }
@@ -56,6 +61,15 @@ public class Book {
     }
 
     @NonNull
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(@NonNull String isbn) {
+        this.isbn = isbn;
+    }
+
+    @NonNull
     public String getType() {
         return type;
     }
@@ -66,6 +80,6 @@ public class Book {
 
     @Override
     public String toString(){
-        return "[Book -> " + getBook_title() + ", " + getAuthor() + ", " + getImage() + ", " + getType() + "]";
+        return "[Book -> " + getBook_title() + ", " + getAuthor() + ", " + getIsbn() + ", " + getImage() + ", " + getType() + "]";
     }
 }

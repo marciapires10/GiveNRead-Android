@@ -3,7 +3,6 @@ package pt.ua.givenread;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class BookInfo {
@@ -37,6 +36,10 @@ public class BookInfo {
     @SerializedName("imageLinks")
     @Expose
     private VolumeImageLinks imageLinks;
+
+    @SerializedName("industryIdentifiers")
+    @Expose
+    private ArrayList<VolumeIndustryIdentifiers> industryIdentifiers;
 
     private String previewLink;
     private String infoLink;
@@ -130,6 +133,14 @@ public class BookInfo {
         this.buyLink = buyLink;
     }
 
+    public ArrayList<VolumeIndustryIdentifiers> getIndustryIdentifiers() {
+        return industryIdentifiers;
+    }
+
+    public void setIndustryIdentifiers(ArrayList<VolumeIndustryIdentifiers> industryIdentifiers) {
+        this.industryIdentifiers = industryIdentifiers;
+    }
+
     @Override
     public String toString() {
         return "BookInfo{" +
@@ -141,6 +152,7 @@ public class BookInfo {
                 ", description='" + description + '\'' +
                 ", pageCount=" + pageCount +
                 ", imageLinks=" + imageLinks +
+                ", industryIdentifiers=" + industryIdentifiers +
                 ", previewLink='" + previewLink + '\'' +
                 ", infoLink='" + infoLink + '\'' +
                 ", buyLink='" + buyLink + '\'' +
@@ -151,7 +163,7 @@ public class BookInfo {
 
     }
 
-    public BookInfo(String title, String subtitle, ArrayList<String> authors, String publisher, String publishedDate, String description, int pageCount, VolumeImageLinks imageLinks, String previewLink, String infoLink, String buyLink) {
+    public BookInfo(String title, String subtitle, ArrayList<String> authors, String publisher, String publishedDate, String description, int pageCount, VolumeImageLinks imageLinks, ArrayList<VolumeIndustryIdentifiers> industryIdentifiers, String previewLink, String infoLink, String buyLink) {
         this.title = title;
         this.subtitle = subtitle;
         this.authors = authors;
@@ -160,6 +172,7 @@ public class BookInfo {
         this.description = description;
         this.pageCount = pageCount;
         this.imageLinks = imageLinks;
+        this.industryIdentifiers = industryIdentifiers;
         this.previewLink = previewLink;
         this.infoLink = infoLink;
         this.buyLink = buyLink;

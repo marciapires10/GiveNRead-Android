@@ -6,7 +6,10 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.Flowable;
 
 @Dao
 public interface BookDao {
@@ -28,5 +31,8 @@ public interface BookDao {
 
     @Query("SELECT * FROM books WHERE type='ToRead'")
     LiveData<List<Book>> getAllToRead();
+
+    @Query("SELECT * FROM books WHERE type='ToRead'")
+    List<Book> getAllToReadList();
 
 }

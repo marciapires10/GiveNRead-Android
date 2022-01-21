@@ -1,12 +1,21 @@
 package pt.ua.givenread;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.google.common.util.concurrent.ListenableFuture;
+
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+
+import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 public class BookViewModel extends AndroidViewModel {
     private BooksClient bookClient;
@@ -15,8 +24,8 @@ public class BookViewModel extends AndroidViewModel {
     private LiveData<List<Book>> booksToGive;
     private LiveData<List<Book>> booksToRead;
 
-
     public BookViewModel(@NonNull Application application) {
+
         super(application);
     }
 
@@ -43,6 +52,10 @@ public class BookViewModel extends AndroidViewModel {
     public LiveData<List<Book>> getBooksToGive() { return booksToGive;}
 
     public LiveData<List<Book>> getBooksToRead() { return booksToRead;}
+
+    public List<Book> getBooksToReadList() throws ExecutionException, InterruptedException {
+       return bookClient.getAllToReadList();
+    }
 
     public void deleteAll(){
         bookClient.deleteAll();

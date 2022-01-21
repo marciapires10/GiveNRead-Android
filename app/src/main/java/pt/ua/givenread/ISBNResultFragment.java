@@ -40,8 +40,8 @@ public class ISBNResultFragment extends Fragment {
         }
 
         viewModel = ViewModelProviders.of(this).get(BookViewModel.class);
-        adapter = new BookAdapter(context, viewModel, isbnResult, bookstop, check_type);
         viewModel.init();
+        adapter = new BookAdapter(getContext(), viewModel, isbnResult, bookstop, check_type);
         viewModel.getVolumeResponseLiveData().observe(this, volumesResponse -> {
             if (volumesResponse != null) {
                 adapter.setBookResults(volumesResponse.getItems());
@@ -72,4 +72,5 @@ public class ISBNResultFragment extends Fragment {
 
         viewModel.searchBookByISBN("isbn:" + isbn);
     }
+
 }

@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +18,13 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.common.util.concurrent.ListenableFuture;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+
+import io.reactivex.Flowable;
 
 public class BooksListFragment extends Fragment {
 
@@ -50,6 +56,7 @@ public class BooksListFragment extends Fragment {
         /**viewModel.getBooks().observe(this, books -> {
             adapter_list1.submitList(books);
         });**/
+
 
         viewModel.getBooksToGive().observe(this, books -> adapter_list1.submitList(books));
 

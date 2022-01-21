@@ -5,10 +5,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.Manifest;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +23,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+
+
+    BookViewModel viewModel;
+    Handler handler = new Handler();
 
     BottomNavigationView bottomNavView;
     FloatingActionButton fabNav;
@@ -32,10 +41,38 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        viewModel = ViewModelProviders.of(this).get(BookViewModel.class);
+        viewModel.init();
+
         bottomNavView = findViewById(R.id.bottomNavigationView);
 
         bottomNavView.setOnItemSelectedListener(this);
         bottomNavView.setSelectedItemId(R.id.home);
+
+        createNotificationChannel();
+        handler.post(runnableCode);
+    }
+
+    private Runnable runnableCode = new Runnable() {
+        @Override
+        public void run() {
+            DataFromFirebase.getAllDataFromFirebase(viewModel, getApplicationContext());
+
+            handler.postDelayed(this, 2000);
+        }
+    };
+
+    private void createNotificationChannel(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            String name = "channel_1";
+            String description = "notification_channel";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel channel = new NotificationChannel("channel_id_1", name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
     private boolean hasCameraPermission() {

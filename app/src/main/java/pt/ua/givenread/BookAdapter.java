@@ -1,9 +1,12 @@
 package pt.ua.givenread;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetManager;
-import android.graphics.drawable.Drawable;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,22 +14,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> {
@@ -37,12 +33,6 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
     private String check_type;
     private ArrayList<Volume> bookResults = new ArrayList<>();
     private Context context;
-
-    FirebaseDatabase firebaseDatabase;
-    DatabaseReference databaseReference;
-
-    BookInfo bookToDB;
-    BookInfo.BookInfoFirebase bookInfoToDB;
 
     public BookAdapter(Context context, BookViewModel viewModel, String type, String bookstop, String check_type){
 
@@ -68,7 +58,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         holder.publisherTV.setText(volume.getBookInfo().getPublisher());
         holder.pageCountTV.setText("No of pages: " + volume.getBookInfo().getPageCount());
         holder.add_book_to_list.setId(pos);
-        holder.add_book_to_list.setText("add");
+        holder.add_book_to_list.setText(String.valueOf(pos));
 
         if (volume.getBookInfo().getThumbnail() != null){
             String imageUrl = volume.getBookInfo().getThumbnail().getSmallThumbnail().replace("http://", "https://");
@@ -81,6 +71,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         }
 
         holder.itemView.setOnClickListener(v -> {
+            Log.d("HOLDER", volume.getBookInfo().getTitle());
             Context mcontext = v.getContext();
             Intent intent = new Intent(mcontext, BookDetails.class);
             intent.putExtra("title", volume.getBookInfo().getTitle());
@@ -98,82 +89,30 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
             mcontext.startActivity(intent);
         });
 
-        firebaseDatabase = FirebaseDatabase.getInstance("https://givenread-android-default-rtdb.europe-west1.firebasedatabase.app/");
-        databaseReference = firebaseDatabase.getReference("BookInfo");
-
-        bookToDB = new BookInfo();
-
         if(check_type.equals("check-out")){
             holder.add_book_to_list.setText("remove");
         }
 
-
         holder.add_book_to_list.setOnClickListener(v -> {
-            Log.d("printtype", type);
             Book book;
             if (type.equals("ToGive")){
-                Log.d("Bool", "é to give");
-                book = new Book(volume.getBookInfo().getTitle(), "", volume.getBookInfo().getThumbnail().getSmallThumbnail(), type);
+                book = new Book(volume.getBookInfo().getTitle(), volume.getBookInfo().getAuthors().get(0), volume.getBookInfo().getIndustryIdentifiers().get(0).getIdentifier(), volume.getBookInfo().getThumbnail().getSmallThumbnail(), type);
                 viewModel.insert(book);
             }
             else if (type.equals("ToRead")) {
-                Log.d("Bool", type);
-                book = new Book(volume.getBookInfo().getTitle(), "", volume.getBookInfo().getThumbnail().getSmallThumbnail(), type);
+                book = new Book(volume.getBookInfo().getTitle(), volume.getBookInfo().getAuthors().get(0), volume.getBookInfo().getIndustryIdentifiers().get(0).getIdentifier(), volume.getBookInfo().getThumbnail().getSmallThumbnail(), type);
                 viewModel.insert(book);
             }
             else {
                 if (check_type.equals("check-in")){
-                    addDatatoFirebase(volume.getBookInfo().getTitle(), volume.getBookInfo().getAuthors(), type, bookstop);
+                    DataFromFirebase.addDatatoFirebase(volume.getBookInfo().getTitle(), volume.getBookInfo().getAuthors(), type, bookstop);
                 }
                 else{
-                    removeDataFromFirebase(type);
+                    DataFromFirebase.removeDataFromFirebase(type, bookstop);
                 }
             }
-
         });
-    }
 
-    private void addDatatoFirebase(String book_title, ArrayList<String> authors, String isbn, String bookstop) {
-
-        bookToDB.setTitle(book_title);
-        bookToDB.setAuthors(authors);
-
-        bookInfoToDB = new BookInfo.BookInfoFirebase(book_title, authors, isbn, bookstop);
-
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                databaseReference.child(isbn).push().setValue(bookInfoToDB);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    private void removeDataFromFirebase(String isbn) {
-
-        Log.d("bookstop", bookstop);
-
-        databaseReference.child(isbn).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot s : snapshot.getChildren()){
-                    if(s.child("bookstop").getValue().toString().equals(bookstop)){
-                        s.getRef().removeValue();
-                    }
-                }
-
-               // databaseReference.child(isbn).removeValue();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
     }
 
     public int getItemCount(){
@@ -201,5 +140,35 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
             bookIV = itemView.findViewById(R.id.idIVbook);
             add_book_to_list = itemView.findViewById(R.id.add_book_to_list);
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    static void sendNotification(String title, String messageBody, Context applicationContext){
+        Intent intent = new Intent(applicationContext, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(applicationContext, 0, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(applicationContext, "channel_id_1")
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(title)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true)
+                .setSound(defaultSoundUri)
+                .setContentIntent(pendingIntent)
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(messageBody))
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+
+
+        NotificationManager notificationManager =
+                (NotificationManager) applicationContext.getSystemService(Context.NOTIFICATION_SERVICE);
+
+
+        int random = (int)System.currentTimeMillis();
+        notificationManager.notify(random, notificationBuilder.build());
     }
 }
