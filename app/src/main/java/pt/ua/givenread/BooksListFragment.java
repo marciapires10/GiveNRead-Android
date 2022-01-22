@@ -88,14 +88,14 @@ public class BooksListFragment extends Fragment {
 
 
         // Button to add book to To Give list
-        addTGButton = view.findViewById(R.id.addBookToGive);
+        /**addTGButton = view.findViewById(R.id.addBookToGive);
 
         addTGButton.setOnClickListener(v -> {
             Context mcontext = v.getContext();
             Intent intent = new Intent(mcontext, BookSearchActivity.class);
             intent.putExtra("type", "ToGive");
             mcontext.startActivity(intent);
-        });
+        });**/
 
         // Button to see all list of To Give books
         seeAllTGButton = view.findViewById(R.id.seeAllToGive);
@@ -109,14 +109,14 @@ public class BooksListFragment extends Fragment {
         });
 
         // Button to add book to To Read list
-        addTRButton = view.findViewById(R.id.addBookToRead);
+        /**addTRButton = view.findViewById(R.id.addBookToRead);
 
         addTRButton.setOnClickListener(v -> {
             Context mcontext = v.getContext();
             Intent intent = new Intent(mcontext, BookSearchActivity.class);
             intent.putExtra("type", "ToRead");
             mcontext.startActivity(intent);
-        });
+        });**/
 
         // Button to see all list of To Read books
         seeAllTRButton = view.findViewById(R.id.seeAllToRead);

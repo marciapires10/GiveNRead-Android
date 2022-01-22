@@ -112,15 +112,12 @@ public class BarcodeScannerFragment extends Fragment {
                                                 Point[] corners = barcode.getCornerPoints();
 
                                                 String rawValue = barcode.getRawValue();
-                                                Log.d("format", String.valueOf(barcode.getFormat()));
 
                                                  int valueType = barcode.getValueType();
-                                                 Log.d("valueType", String.valueOf(valueType));
 
                                                  if (barcodes.size() > 0 && rawValue != null){
                                                      switch (valueType) {
                                                          case Barcode.TYPE_TEXT:
-                                                             Log.d("TYPE", "qrcode");
                                                              BookStopCheckFragment bookStopCheckFragment = new BookStopCheckFragment();
                                                              Bundle qrcode_args = new Bundle();
                                                              qrcode_args.putString("ScanResult", rawValue);
@@ -128,17 +125,10 @@ public class BarcodeScannerFragment extends Fragment {
                                                              getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, bookStopCheckFragment).commit();
                                                              break;
                                                          case Barcode.TYPE_ISBN:
-                                                             Log.d("TYP2", "isbn");
-                                                             //Intent intent = new Intent(getContext(), BookSearchActivity.class);
-                                                             //intent.putExtra("type", rawValue);
-                                                             //startActivity(intent);
-
                                                              ISBNResultFragment fragment = new ISBNResultFragment();
                                                              Bundle args = new Bundle();
                                                              args.putString("ISBNResult", rawValue);
-                                                             Log.d("BOOKSTOP", bookstop);
                                                              args.putString("BookStop", bookstop);
-                                                             Log.d("CHECK TYPE", check_type);
                                                              args.putString("CheckType", check_type);
                                                              fragment.setArguments(args);
                                                              getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
@@ -146,22 +136,6 @@ public class BarcodeScannerFragment extends Fragment {
                                                      }
                                                  }
 
-                                                Log.d("RAWVALUE", rawValue);
-
-                                                /**if (barcodes.size() > 0 && rawValue != null){
-                                                    //Toast.makeText(context, rawValue, Toast.LENGTH_SHORT).show();
-                                                    //Intent intent = new Intent(getContext(), BookSearchActivity.class);
-                                                    //getContext().startActivity(intent);
-                                                    BookStopCheckFragment fragment = new BookStopCheckFragment();
-                                                    Bundle args = new Bundle();
-                                                    args.putString("ScanResult", rawValue);
-                                                    fragment.setArguments(args);
-                                                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
-
-
-
-                                                    Log.d("GO TO", "Main Activity");
-                                                }**/
 
                                                 /**rectPaint = new Paint();
                                                  rectPaint.setColor(boxColor);

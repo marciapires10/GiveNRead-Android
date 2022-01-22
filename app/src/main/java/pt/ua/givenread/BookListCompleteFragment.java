@@ -1,5 +1,7 @@
 package pt.ua.givenread;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,12 +14,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 public class BookListCompleteFragment extends Fragment {
 
     private String type = "";
-    private BookListAdapter adapter;
+    private BookListCompleteAdapter adapter;
     private BookViewModel viewModel;
-    private LinearLayoutManager HorizontalLayout;
+    private FloatingActionButton addBooks;
 
     public BookListCompleteFragment() {
         // Required empty public constructor
@@ -32,7 +36,7 @@ public class BookListCompleteFragment extends Fragment {
 
         viewModel = ViewModelProviders.of(this).get(BookViewModel.class);
         viewModel.init();
-        adapter = new BookListAdapter(new BookListAdapter.BookDiff());
+        adapter = new BookListCompleteAdapter(new BookListCompleteAdapter.BookDiff(), viewModel);
 
         if (type.equals("ToGive")){
             viewModel.getBooksToGive().observe(this, books -> adapter.submitList(books));
@@ -50,6 +54,15 @@ public class BookListCompleteFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.list_complete_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
+
+        addBooks = view.findViewById(R.id.fab_addbooks);
+
+        addBooks.setOnClickListener(v -> {
+            Context mcontext = v.getContext();
+            Intent intent = new Intent(mcontext, BookSearchActivity.class);
+            intent.putExtra("type", type);
+            mcontext.startActivity(intent);
+        });
 
         return view;
     }

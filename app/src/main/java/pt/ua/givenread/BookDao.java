@@ -2,6 +2,7 @@ package pt.ua.givenread;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -22,6 +23,9 @@ public interface BookDao {
 
     @Query("DELETE FROM books")
     void deleteAll();
+
+    @Delete
+    void delete(Book book);
 
     @Query("SELECT * FROM books")
     LiveData<List<Book>> getAll();

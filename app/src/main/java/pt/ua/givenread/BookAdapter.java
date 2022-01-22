@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -58,7 +59,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         holder.publisherTV.setText(volume.getBookInfo().getPublisher());
         holder.pageCountTV.setText("No of pages: " + volume.getBookInfo().getPageCount());
         holder.add_book_to_list.setId(pos);
-        holder.add_book_to_list.setText(String.valueOf(pos));
+        holder.add_book_to_list.setText("add");
 
         if (volume.getBookInfo().getThumbnail() != null){
             String imageUrl = volume.getBookInfo().getThumbnail().getSmallThumbnail().replace("http://", "https://");

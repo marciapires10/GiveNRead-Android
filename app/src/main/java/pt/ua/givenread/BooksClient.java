@@ -98,6 +98,12 @@ public class BooksClient {
     }
 
 
+    void delete(Book book){
+        BookRoomDatabase.databaseWriteExecutor.execute(() -> {
+            bookDao.delete(book);
+        });
+    }
+
     void deleteAll(){
         BookRoomDatabase.databaseWriteExecutor.execute(() -> {
             bookDao.deleteAll();

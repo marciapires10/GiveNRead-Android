@@ -57,6 +57,8 @@ public class BookViewModel extends AndroidViewModel {
        return bookClient.getAllToReadList();
     }
 
+    public void delete(Book book) { bookClient.delete(book);}
+
     public void deleteAll(){
         bookClient.deleteAll();
     }

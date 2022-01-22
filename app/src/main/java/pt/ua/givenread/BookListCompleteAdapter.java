@@ -1,31 +1,35 @@
 package pt.ua.givenread;
 
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
-public class BookListAdapter extends ListAdapter<Book, BookListViewHolder> {
+import java.util.ArrayList;
 
-    public BookListAdapter(DiffUtil.ItemCallback<Book> diffCallback){
+public class BookListCompleteAdapter extends ListAdapter<Book, BookListCompleteViewHolder> {
+
+    BookViewModel bookViewModel;
+
+    public BookListCompleteAdapter(DiffUtil.ItemCallback<Book> diffCallback, BookViewModel viewModel){
         super(diffCallback);
+        this.bookViewModel = viewModel;
     }
 
     @NonNull
     @Override
-    public BookListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
-       return BookListViewHolder.create(parent);
+    public BookListCompleteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
+        return BookListCompleteViewHolder.create(parent);
     }
 
 
     @Override
-    public void onBindViewHolder(BookListViewHolder holder, int position) {
+    public void onBindViewHolder(BookListCompleteViewHolder holder, int position) {
         Book current = getItem(position);
-        Log.d("book", current.toString());
-        Log.d("current", current.getBook_title());
-        holder.bind(current.getBook_title(), current.getImage());
+        holder.bind(current, bookViewModel);
     }
 
     static class BookDiff extends DiffUtil.ItemCallback<Book> {
