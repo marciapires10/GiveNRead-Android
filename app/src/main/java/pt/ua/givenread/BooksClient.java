@@ -116,15 +116,32 @@ public class BooksClient {
         });
     }
 
-    public List<Book> getAllToReadList() throws ExecutionException, InterruptedException {
-        return new getAllAsyncTask(bookDao).execute().get();
+    public List<Book> getAllToGiveList() throws ExecutionException, InterruptedException {
+        return new getToGiveAsync(bookDao).execute().get();
     }
 
-    private static class getAllAsyncTask extends android.os.AsyncTask<Void, Void, List<Book>> {
+    private static class getToGiveAsync extends android.os.AsyncTask<Void, Void, List<Book>> {
+        private BookDao mAsyncTaskDao;
+
+        getToGiveAsync(BookDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected List<Book> doInBackground(Void... voids) {
+            return mAsyncTaskDao.getAllToGiveList();
+        }
+    }
+
+    public List<Book> getAllToReadList() throws ExecutionException, InterruptedException {
+        return new getToReadAsync(bookDao).execute().get();
+    }
+
+    private static class getToReadAsync extends android.os.AsyncTask<Void, Void, List<Book>> {
 
         private BookDao mAsyncTaskDao;
 
-        getAllAsyncTask(BookDao dao) {
+        getToReadAsync(BookDao dao) {
             mAsyncTaskDao = dao;
         }
 

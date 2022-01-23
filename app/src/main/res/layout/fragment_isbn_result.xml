@@ -6,12 +6,6 @@
     tools:context=".ISBNResultFragment"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/isbn_result"
-        android:text="@string/hello_blank_fragment" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

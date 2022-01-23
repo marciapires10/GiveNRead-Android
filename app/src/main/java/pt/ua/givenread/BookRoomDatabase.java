@@ -12,7 +12,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Book.class}, version = 4, exportSchema = false)
+@Database(entities = {Book.class}, version = 5, exportSchema = false)
 public abstract class BookRoomDatabase extends RoomDatabase {
 
     private static volatile BookRoomDatabase INSTANCE;
@@ -38,18 +38,6 @@ public abstract class BookRoomDatabase extends RoomDatabase {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
-
-            // If you want to keep data through app restarts,
-            // comment out the following block
-            databaseWriteExecutor.execute(() -> {
-                // Populate the database in the background.
-                // If you want to start with more words, just add them.
-                BookDao bookDao = INSTANCE.bookDao();
-                //bookDao.deleteAll();
-
-               // Book word = new Book("Hello", "HP", "111");
-                //bookDao.insert(word);
-            });
         }
     };
 

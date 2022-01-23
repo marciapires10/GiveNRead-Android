@@ -25,6 +25,7 @@
         <entry key="app/src/main/res/layout/fragment_homepage.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_isbn_result.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_maps.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/matches_row.xml" value="0.17407407407407408" />
         <entry key="app/src/main/res/layout/mynavgraph.xml" value="0.1" />
         <entry key="app/src/main/res/menu/bottom_navbar.xml" value="0.22083333333333333" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_coverNotAvailable.xml" value="0.22916666666666666" />

@@ -59,9 +59,6 @@ public class ISBNResultFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
-        isbnTV = view.findViewById(R.id.isbn_result);
-        isbnTV.setText(isbnResult);
-
         performSearchByISBN(isbnResult);
 
         return view;

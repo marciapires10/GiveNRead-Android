@@ -53,6 +53,10 @@ public class BookViewModel extends AndroidViewModel {
 
     public LiveData<List<Book>> getBooksToRead() { return booksToRead;}
 
+    public List<Book> getBooksToGiveList() throws ExecutionException, InterruptedException {
+        return bookClient.getAllToGiveList();
+    }
+
     public List<Book> getBooksToReadList() throws ExecutionException, InterruptedException {
        return bookClient.getAllToReadList();
     }
