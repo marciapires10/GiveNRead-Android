@@ -24,16 +24,6 @@ public class BookStopCheckFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**public static BookStopCheckFragment newInstance(String scanResult) {
-        BookStopCheckFragment fragment = new BookStopCheckFragment();
-
-        Bundle args = new Bundle();
-        args.putString("ScanResult", scanResult);
-        fragment.setArguments(args);
-
-        return fragment;
-    }**/
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

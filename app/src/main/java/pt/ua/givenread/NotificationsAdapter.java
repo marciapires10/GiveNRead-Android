@@ -1,12 +1,16 @@
 package pt.ua.givenread;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -24,7 +28,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
     @NonNull
     @Override
     public NotificationsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.matches_row, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.notifications_row, parent, false);
         return new NotificationsViewHolder(view);
     }
 
@@ -35,11 +39,17 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         holder.titleTV.setText("You have a new match!");
         holder.messageBodyTV.setText(notification);
 
+
     }
 
     @Override
     public int getItemCount() {
         return notifications.size();
+    }
+
+    public void deleteItem(int position) {
+        notifications.remove(position);
+        notifyItemRemoved(position);
     }
 
     public class NotificationsViewHolder extends RecyclerView.ViewHolder {
@@ -49,8 +59,15 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         public NotificationsViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            titleTV = itemView.findViewById(R.id.match_bookTitle);
-            messageBodyTV = itemView.findViewById(R.id.match_bookAuthor);
+            titleTV = itemView.findViewById(R.id.notification_title);
+            messageBodyTV = itemView.findViewById(R.id.notification_body);
+
+            itemView.setOnClickListener(v -> {
+                MapsFragment fragment = new MapsFragment();
+                Bundle args = new Bundle();
+                args.putString("Bookstop", "Bookstop1");
+                ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+            });
         }
     }
 }

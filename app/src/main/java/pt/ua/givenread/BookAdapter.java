@@ -76,7 +76,6 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         }
 
         holder.itemView.setOnClickListener(v -> {
-            Log.d("HOLDER", volume.getBookInfo().getTitle());
             Context mcontext = v.getContext();
             Intent intent = new Intent(mcontext, BookDetails.class);
             intent.putExtra("title", volume.getBookInfo().getTitle());
@@ -172,7 +171,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(applicationContext, "channel_id_1")
-                .setSmallIcon(R.mipmap.ic_books)
+                .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(title)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true)

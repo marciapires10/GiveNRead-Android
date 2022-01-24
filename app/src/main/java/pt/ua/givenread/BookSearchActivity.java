@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.Log;
 
-public class BookSearchActivity extends AppCompatActivity {
+/**public class BookSearchActivity extends AppCompatActivity {
 
     private static String type = "";
 
@@ -29,4 +29,4 @@ public class BookSearchActivity extends AppCompatActivity {
         // Add the fragment.
         fragmentTransaction.add(R.id.activity_book_search, fragment).addToBackStack(null).commit();
     }
-}
+}**/

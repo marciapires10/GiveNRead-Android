@@ -2,6 +2,8 @@ package pt.ua.givenread;
 
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -9,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.pm.PackageManager;
@@ -30,11 +33,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     Handler handler = new Handler();
 
     BottomNavigationView bottomNavView;
-    FloatingActionButton fabNav;
+    ActionBar actionBar;
 
     private static final String[] CAMERA_PERMISSION = new String[]{Manifest.permission.CAMERA};
     private static final int CAMERA_REQUEST_CODE = 10;
 
+    @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, homepageFragment).commit();
                 return true;
             case R.id.book_opt:
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, booksListFragment).addToBackStack(null).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, booksListFragment).commit();
                 return true;
             case R.id.camera_opt:
                 if (hasCameraPermission()) {
@@ -121,14 +125,28 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 }
                 return true;
             case R.id.map_opt:
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, mapsFragment).addToBackStack(null).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, mapsFragment).commit();
                 return true;
             case R.id.notify_opt:
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, notificationsFragment).addToBackStack(null).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, notificationsFragment).commit();
                 return true;
         }
         return false;
     }
 
+    @Override
+    public void onBackPressed() {
+        if(bottomNavView.getSelectedItemId () != R.id.home_opt)
+        {
+            bottomNavView.setSelectedItemId(R.id.home_opt);
+        }
+        else
+        {
+            super.onBackPressed();
+        }
+    }
 
+    public BottomNavigationView getBottomNavView() {
+        return bottomNavView;
+    }
 }

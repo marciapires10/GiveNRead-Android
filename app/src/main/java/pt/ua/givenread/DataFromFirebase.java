@@ -108,6 +108,9 @@ public class DataFromFirebase extends Application {
                                 String notification_body = "The book " + book.book_title + " is at " + s.child("bookstop").getValue().toString();
                                 BookAdapter.sendNotification("You have a book match!", notification_body, applicationContext);
                                 notifications.add(notification_body);
+                                /**bottomNavView = ((MainActivity)getActivity()).getBottomNavView();
+                                Log.d("notfica", String.valueOf(DataFromFirebase.getNotifications().size()));
+                                bottomNavView.getOrCreateBadge(R.id.notify_opt).setNumber(DataFromFirebase.getNotifications().size());**/
                             }
                         }
 

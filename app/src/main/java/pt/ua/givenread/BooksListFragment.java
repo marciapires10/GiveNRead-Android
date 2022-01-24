@@ -1,11 +1,11 @@
 package pt.ua.givenread;
 
+
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,16 +15,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.Toolbar;
 
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.common.util.concurrent.ListenableFuture;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import io.reactivex.Flowable;
 
 public class BooksListFragment extends Fragment {
 
@@ -65,6 +60,7 @@ public class BooksListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_bookslist, container, false);
 
+
         RecyclerView recyclerView1 = view.findViewById(R.id.fragment_bookList1_RecyclerView);
         recyclerView1.setLayoutManager(new LinearLayoutManager(getContext()));
         HorizontalLayout = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
@@ -87,10 +83,15 @@ public class BooksListFragment extends Fragment {
                 addTGButton.setVisibility(View.VISIBLE);
 
                 addTGButton.setOnClickListener(v -> {
-                    Context mcontext = v.getContext();
+                    /**Context mcontext = v.getContext();
                     Intent intent = new Intent(mcontext, BookSearchActivity.class);
                     intent.putExtra("type", "ToGive");
-                    mcontext.startActivity(intent);
+                    mcontext.startActivity(intent);**/
+                    BookSearchFragment fragment = new BookSearchFragment();
+                    Bundle args = new Bundle();
+                    args.putString("type", "ToGive");
+                    fragment.setArguments(args);
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                 });
             }
             else {
@@ -110,7 +111,7 @@ public class BooksListFragment extends Fragment {
             Bundle type_tg = new Bundle();
             type_tg.putString("Type", "ToGive");
             fragment_tg.setArguments(type_tg);
-            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment_tg).addToBackStack(null).commit();
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment_tg).commit();
         });
 
 
@@ -120,10 +121,15 @@ public class BooksListFragment extends Fragment {
                 addTRButton.setVisibility(View.VISIBLE);
 
                 addTRButton.setOnClickListener(v -> {
-                    Context mcontext = v.getContext();
+                    /**Context mcontext = v.getContext();
                     Intent intent = new Intent(mcontext, BookSearchActivity.class);
                     intent.putExtra("type", "ToRead");
-                    mcontext.startActivity(intent);
+                    mcontext.startActivity(intent);**/
+                    BookSearchFragment fragment = new BookSearchFragment();
+                    Bundle args = new Bundle();
+                    args.putString("type", "ToRead");
+                    fragment.setArguments(args);
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                 });
             }
             else {
@@ -144,10 +150,8 @@ public class BooksListFragment extends Fragment {
             Bundle type_tr = new Bundle();
             type_tr.putString("Type", "ToRead");
             fragment_tr.setArguments(type_tr);
-            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment_tr).addToBackStack(null).commit();
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment_tr).commit();
         });
-
-
 
         return view;
     }
