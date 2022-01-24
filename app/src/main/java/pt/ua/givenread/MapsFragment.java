@@ -2,8 +2,12 @@ package pt.ua.givenread;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,13 +34,20 @@ public class MapsFragment extends Fragment {
          * install it inside the SupportMapFragment. This method will only be triggered once the
          * user has installed Google Play services and returned to the app.
          */
+        @SuppressLint("MissingPermission")
         @Override
         public void onMapReady(GoogleMap googleMap) {
 
 
             googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
-            //googleMap.setMyLocationEnabled(true);
+            if ((ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) && (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED)){
+                googleMap.setMyLocationEnabled(true);
+            }
+
+
 
             LatLng centerCamera = new LatLng(40.6333308, -8.6499974);
 

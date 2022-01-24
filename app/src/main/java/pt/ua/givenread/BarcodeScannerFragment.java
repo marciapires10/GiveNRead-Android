@@ -45,7 +45,7 @@ public class BarcodeScannerFragment extends Fragment {
 
     private String bookstop = "";
     private String check_type = "";
-
+    private boolean was_warned = false;
     public BarcodeScannerFragment() {
         // Required empty public constructor
     }
@@ -132,6 +132,10 @@ public class BarcodeScannerFragment extends Fragment {
                                 .addOnSuccessListener(
                                         barcodes -> {
                                             // Task completed successfully
+                                            if(was_warned && barcodes.size() == 0)
+                                            {
+                                                was_warned = false;
+                                            }
                                             for (Barcode barcode: barcodes){
                                                 Rect bounds = barcode.getBoundingBox();
                                                 Point[] corners = barcode.getCornerPoints();
@@ -149,9 +153,9 @@ public class BarcodeScannerFragment extends Fragment {
                                                              bookStopCheckFragment.setArguments(qrcode_args);
                                                              getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, bookStopCheckFragment).commit();
                                                          }
-                                                         else {
+                                                         else if(!was_warned){
                                                              Toast.makeText(getActivity().getApplicationContext(), "Please read a valid QR Code", Toast.LENGTH_SHORT).show();
-
+                                                            was_warned = true;
                                                          }
                                                      }
                                                      else {
@@ -164,8 +168,9 @@ public class BarcodeScannerFragment extends Fragment {
                                                              isbnResultFragment.setArguments(args);
                                                              getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, isbnResultFragment).commit();
                                                          }
-                                                         else {
+                                                         else if(!was_warned){
                                                              Toast.makeText(getActivity().getApplicationContext(), "Please read a valid ISBN", Toast.LENGTH_SHORT).show();
+                                                             was_warned = true;
                                                          }
                                                      }
                                                      /**switch (valueType) {
