@@ -28,7 +28,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
-
+    private static MainActivity instance;
     BookViewModel viewModel;
     Handler handler = new Handler();
 
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        instance = this;
         viewModel = ViewModelProviders.of(this).get(BookViewModel.class);
         viewModel.init();
 
@@ -164,6 +164,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     public BottomNavigationView getBottomNavView() {
         return bottomNavView;
+    }
+
+    public static MainActivity getInstance() {
+        return instance;
+    }
+    public void updateNotificationsNumber(int number)
+    {
+        bottomNavView.getOrCreateBadge(R.id.notify_opt).getNumber();
+        bottomNavView.getOrCreateBadge(R.id.notify_opt).setNumber(bottomNavView.getOrCreateBadge(R.id.notify_opt).getNumber() + number);
     }
 
 }

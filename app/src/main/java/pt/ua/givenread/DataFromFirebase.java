@@ -97,6 +97,7 @@ public class DataFromFirebase extends Application {
                     e.printStackTrace();
                 }
 
+                int matches_found = 0;
                 for (DataSnapshot snap : snapshot.getChildren()){
                     for (DataSnapshot s : snap.getChildren()){
                         for (Book book : booksToRead){
@@ -113,6 +114,7 @@ public class DataFromFirebase extends Application {
                                 bookstop.add(bookstop_id);
                                 bookstop.add(notification_body);
                                 notifications.add(bookstop);
+                                matches_found += 1;
                                 //notifications.add(notification_body);
                                 /**bottomNavView = ((MainActivity)getActivity()).getBottomNavView();
                                 Log.d("notfica", String.valueOf(DataFromFirebase.getNotifications().size()));
@@ -122,7 +124,7 @@ public class DataFromFirebase extends Application {
 
                     }
                 }
-
+                MainActivity.getInstance().updateNotificationsNumber(matches_found);
                 Log.d("notifications", notifications.toString());
             }
 
