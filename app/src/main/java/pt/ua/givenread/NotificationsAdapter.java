@@ -18,9 +18,9 @@ import java.util.List;
 public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdapter.NotificationsViewHolder> {
 
     Context context;
-    private List<String> notifications;
+    private List<List<String>> notifications;
 
-    public NotificationsAdapter(Context context, List<String> notifications) {
+    public NotificationsAdapter(Context context, List<List<String>> notifications) {
         this.context = context;
         this.notifications = notifications;
     }
@@ -34,10 +34,21 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
 
     @Override
     public void onBindViewHolder(@NonNull NotificationsViewHolder holder, int position) {
-        String notification = notifications.get(position);
+        String bookstop = notifications.get(position).get(0);
+        String notification = notifications.get(position).get(1);
+
+        //String notification = notifications.get(position);
 
         holder.titleTV.setText("You have a new match!");
         holder.messageBodyTV.setText(notification);
+
+        holder.itemView.setOnClickListener(v -> {
+            MapsFragment fragment = new MapsFragment();
+            Bundle args = new Bundle();
+            args.putString("Bookstop", bookstop);
+            fragment.setArguments(args);
+            ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+        });
 
 
     }
@@ -62,12 +73,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
             titleTV = itemView.findViewById(R.id.notification_title);
             messageBodyTV = itemView.findViewById(R.id.notification_body);
 
-            itemView.setOnClickListener(v -> {
-                MapsFragment fragment = new MapsFragment();
-                Bundle args = new Bundle();
-                args.putString("Bookstop", "Bookstop1");
-                ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
-            });
+
         }
     }
 }

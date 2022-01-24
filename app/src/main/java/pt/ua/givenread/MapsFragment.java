@@ -9,6 +9,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsFragment extends Fragment {
+
+    String bookstop;
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
@@ -47,13 +50,9 @@ public class MapsFragment extends Fragment {
                 googleMap.setMyLocationEnabled(true);
             }
 
-
-
             LatLng centerCamera = new LatLng(40.6333308, -8.6499974);
 
-            CameraPosition cameraPosition = new CameraPosition.Builder().target(centerCamera).zoom(14).build();
-
-            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            CameraPosition cameraPosition;
 
             LatLng bookstop1 = new LatLng(40.63318631270549, -8.659459114357666);
             googleMap.addMarker(new MarkerOptions().position(bookstop1).title("Bookstop 1"));
@@ -62,13 +61,23 @@ public class MapsFragment extends Fragment {
             LatLng bookstop2 = new LatLng(40.63067854192939, -8.65347069632065);
             googleMap.addMarker(new MarkerOptions().position(bookstop2).title("Bookstop 2"));
             //googleMap.moveCamera(CameraUpdateFactory.newLatLng(bookstop2));
+
+            Log.d("bookstop", bookstop);
+            if(bookstop.equals("BookStop1")){
+                Log.d("entrou 1", "book1");
+                cameraPosition = new CameraPosition.Builder().target(bookstop1).zoom(18).build();
+            }
+            else if (bookstop.equals("BookStop2")){
+                Log.d("entrou 2", "book2");
+                cameraPosition = new CameraPosition.Builder().target(bookstop2).zoom(18).build();
+            }
+            else {
+                cameraPosition = new CameraPosition.Builder().target(centerCamera).zoom(14).build();
+            }
+            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
         }
     };
-
-    public static MapsFragment newInstance() {
-        MapsFragment fragment = new MapsFragment();
-        return fragment;
-    }
 
     @Nullable
     @Override
@@ -83,6 +92,15 @@ public class MapsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
+        if(getArguments() != null){
+            Log.d("get", String.valueOf(getArguments().containsKey("Bookstop")));
+        }
+        if(getArguments() != null && getArguments().containsKey("Bookstop")){
+            bookstop = getArguments().getString("Bookstop");
+        }
+
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) {

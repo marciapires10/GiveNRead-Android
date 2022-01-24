@@ -161,11 +161,12 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    static void sendNotification(String title, String messageBody, Context applicationContext){
+    static void sendNotification(String title, String messageBody, Context applicationContext, String bookstop){
         Intent intent = new Intent(applicationContext, MainActivity.class);
-        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("menuFragment", "MapsFragment");
+        Log.d("NOTIFICATION", bookstop);
+        intent.putExtra("Bookstop", bookstop);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(applicationContext, 0, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);

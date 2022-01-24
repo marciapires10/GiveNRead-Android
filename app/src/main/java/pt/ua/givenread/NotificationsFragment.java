@@ -24,7 +24,7 @@ public class NotificationsFragment extends Fragment {
     BottomNavigationView bottomNavView;
 
     NotificationsAdapter adapter;
-    List<String> notificationsList = new ArrayList<>();
+    List<List<String>> notificationsList = new ArrayList<>();
 
     public NotificationsFragment() {
         // Required empty public constructor

@@ -25,7 +25,7 @@ public class DataFromFirebase extends Application {
     private static DatabaseReference databaseReference = firebaseDatabase.getReference("BookInfo");
 
     private static List<List<String>> booksNotified = new ArrayList<>();
-    private static List<String> notifications = new ArrayList<>();
+    private static List<List<String>> notifications = new ArrayList<>();
 
 
     @Override
@@ -105,9 +105,15 @@ public class DataFromFirebase extends Application {
                             bookWithBookstop.add(s.child("bookstop").getValue().toString());
                             if(s.child("book_title").getValue().toString().equals(book.book_title) && !booksNotified.contains(bookWithBookstop)){
                                 booksNotified.add(bookWithBookstop);
-                                String notification_body = "The book " + book.book_title + " is at " + s.child("bookstop").getValue().toString();
-                                BookAdapter.sendNotification("You have a book match!", notification_body, applicationContext);
-                                notifications.add(notification_body);
+                                String bookstop_id = s.child("bookstop").getValue().toString();
+                                Log.d("datafromfirebase", bookstop_id);
+                                String notification_body = "The book " + book.book_title + " is at " + bookstop_id;
+                                BookAdapter.sendNotification("You have a book match!", notification_body, applicationContext, bookstop_id);
+                                List<String> bookstop = new ArrayList<>();
+                                bookstop.add(bookstop_id);
+                                bookstop.add(notification_body);
+                                notifications.add(bookstop);
+                                //notifications.add(notification_body);
                                 /**bottomNavView = ((MainActivity)getActivity()).getBottomNavView();
                                 Log.d("notfica", String.valueOf(DataFromFirebase.getNotifications().size()));
                                 bottomNavView.getOrCreateBadge(R.id.notify_opt).setNumber(DataFromFirebase.getNotifications().size());**/
@@ -127,7 +133,7 @@ public class DataFromFirebase extends Application {
         });
     }
 
-    public static List<String> getNotifications() {
+    public static List<List<String>> getNotifications() {
         return notifications;
     }
 }

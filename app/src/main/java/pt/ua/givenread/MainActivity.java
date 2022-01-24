@@ -7,7 +7,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.Manifest;
@@ -39,13 +38,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private static final String[] CAMERA_PERMISSION = new String[]{Manifest.permission.CAMERA};
     private static final int CAMERA_REQUEST_CODE = 10;
 
-    @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        onNewIntent(getIntent());
 
         viewModel = ViewModelProviders.of(this).get(BookViewModel.class);
         viewModel.init();
@@ -57,6 +53,23 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         createNotificationChannel();
         handler.post(runnableCode);
+
+        String menuFragment = getIntent().getStringExtra("menuFragment");
+        String bookstop = getIntent().getStringExtra("Bookstop");
+
+        if(menuFragment != null && bookstop != null){
+            if (menuFragment.equals("MapsFragment")){
+                Bundle args = new Bundle();
+                args.putString("Bookstop", bookstop);
+                Log.d("MAINACTIVITY", bookstop);
+                mapsFragment.setArguments(args);
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, mapsFragment).commit();
+            }
+            else {
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, homepageFragment).commit();
+
+            }
+        }
     }
 
     private Runnable runnableCode = new Runnable() {
@@ -153,15 +166,4 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         return bottomNavView;
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        Bundle extras = intent.getExtras();
-        if (extras != null){
-            if(extras.containsKey("menuFragment")){
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.container, MapsFragment.newInstance()).commit();
-            }
-        }
-    }
 }
