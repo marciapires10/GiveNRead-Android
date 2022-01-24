@@ -14,6 +14,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -43,6 +44,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        onNewIntent(getIntent());
 
         viewModel = ViewModelProviders.of(this).get(BookViewModel.class);
         viewModel.init();
@@ -148,5 +151,17 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     public BottomNavigationView getBottomNavView() {
         return bottomNavView;
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Bundle extras = intent.getExtras();
+        if (extras != null){
+            if(extras.containsKey("menuFragment")){
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.container, MapsFragment.newInstance()).commit();
+            }
+        }
     }
 }

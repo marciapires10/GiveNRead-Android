@@ -2,19 +2,12 @@ package pt.ua.givenread;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -60,6 +53,11 @@ public class MapsFragment extends Fragment {
             //googleMap.moveCamera(CameraUpdateFactory.newLatLng(bookstop2));
         }
     };
+
+    public static MapsFragment newInstance() {
+        MapsFragment fragment = new MapsFragment();
+        return fragment;
+    }
 
     @Nullable
     @Override
