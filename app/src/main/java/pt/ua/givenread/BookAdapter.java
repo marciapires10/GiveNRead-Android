@@ -167,6 +167,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         intent.putExtra("menuFragment", "MapsFragment");
         Log.d("NOTIFICATION", bookstop);
         intent.putExtra("Bookstop", bookstop);
+        MainActivity.getInstance().setNotification("MapsFragment", bookstop);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(applicationContext, 0, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);

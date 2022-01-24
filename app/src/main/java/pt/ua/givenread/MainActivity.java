@@ -57,19 +57,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         String menuFragment = getIntent().getStringExtra("menuFragment");
         String bookstop = getIntent().getStringExtra("Bookstop");
 
-        if(menuFragment != null && bookstop != null){
-            if (menuFragment.equals("MapsFragment")){
-                Bundle args = new Bundle();
-                args.putString("Bookstop", bookstop);
-                Log.d("MAINACTIVITY", bookstop);
-                mapsFragment.setArguments(args);
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, mapsFragment).commit();
-            }
-            else {
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, homepageFragment).commit();
-
-            }
-        }
     }
 
     private Runnable runnableCode = new Runnable() {
@@ -169,10 +156,29 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public static MainActivity getInstance() {
         return instance;
     }
+
     public void updateNotificationsNumber(int number)
     {
         bottomNavView.getOrCreateBadge(R.id.notify_opt).getNumber();
         bottomNavView.getOrCreateBadge(R.id.notify_opt).setNumber(bottomNavView.getOrCreateBadge(R.id.notify_opt).getNumber() + number);
+    }
+
+    public void setNotification(String menuFragment, String bookstop){
+        Log.d("menu", menuFragment);
+        Log.d("mainBookstop", bookstop);
+        if(menuFragment != null && bookstop != null){
+            if (menuFragment.equals("MapsFragment")){
+                Bundle args = new Bundle();
+                args.putString("Bookstop", bookstop);
+                Log.d("MAINACTIVITY", bookstop);
+                mapsFragment.setArguments(args);
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, mapsFragment).commit();
+            }
+            else {
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, homepageFragment).commit();
+
+            }
+        }
     }
 
 }
