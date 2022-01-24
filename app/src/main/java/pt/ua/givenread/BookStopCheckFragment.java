@@ -56,8 +56,8 @@ public class BookStopCheckFragment extends Fragment {
         bookstop = result[0];
         check_type = result[1];
 
-        bookstop_idTV.setText(bookstop);
-        check_typeTV.setText(check_type);
+        bookstop_idTV.setText("You are at " + bookstop);
+        check_typeTV.setText("If you want to " + check_type + " your book, please scan the book's ISBN!");
 
         scanBook.setOnClickListener(v -> {
             BarcodeScannerFragment fragment = new BarcodeScannerFragment();
@@ -65,7 +65,7 @@ public class BookStopCheckFragment extends Fragment {
             args.putString("BookStop", bookstop);
             args.putString("CheckType", check_type);
             fragment.setArguments(args);
-            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
         });
 
         return view;

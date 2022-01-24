@@ -4,6 +4,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -54,6 +56,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull BookViewHolder holder, int pos){
+
         Volume volume = bookResults.get(pos);
         holder.nameTV.setText(volume.getBookInfo().getTitle());
         holder.publisherTV.setText(volume.getBookInfo().getPublisher());
@@ -67,8 +70,9 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         }
         else {
             Log.d("no image", "no image");
-            //Drawable d = context.getResources().getDrawable(R.drawable.ic_books_background);
-            //holder.bookIV.setImageDrawable(d);
+            Drawable d = ContextCompat.getDrawable(viewModel.getApplication().getApplicationContext(), R.drawable.ic_baseline_image_not_supported_24);
+            //Drawable d = viewModel.getApplication().getApplicationContext().getDrawable(R.drawable.ic_baseline_image_not_supported_24);
+            holder.bookIV.setImageDrawable(d);
         }
 
         holder.itemView.setOnClickListener(v -> {
@@ -97,19 +101,33 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         holder.add_book_to_list.setOnClickListener(v -> {
             Book book;
             if (type.equals("ToGive")){
-                book = new Book(volume.getBookInfo().getTitle(), volume.getBookInfo().getAuthors().get(0), volume.getBookInfo().getIndustryIdentifiers().get(0).getIdentifier(), volume.getBookInfo().getThumbnail().getSmallThumbnail(), type);
+                if(volume.getBookInfo().getThumbnail() != null){
+                    book = new Book(volume.getBookInfo().getTitle(), volume.getBookInfo().getAuthors().get(0), volume.getBookInfo().getIndustryIdentifiers().get(0).getIdentifier(), volume.getBookInfo().getThumbnail().getSmallThumbnail(), type);
+                }
+                else {
+                    book = new Book(volume.getBookInfo().getTitle(), volume.getBookInfo().getAuthors().get(0), volume.getBookInfo().getIndustryIdentifiers().get(0).getIdentifier(), "", type);
+                }
                 viewModel.insert(book);
+                Toast.makeText(viewModel.getApplication().getApplicationContext(), book.getBook_title() + " was added to your list!", Toast.LENGTH_LONG).show();
             }
             else if (type.equals("ToRead")) {
-                book = new Book(volume.getBookInfo().getTitle(), volume.getBookInfo().getAuthors().get(0), volume.getBookInfo().getIndustryIdentifiers().get(0).getIdentifier(), volume.getBookInfo().getThumbnail().getSmallThumbnail(), type);
+                if(volume.getBookInfo().getThumbnail() != null){
+                    book = new Book(volume.getBookInfo().getTitle(), volume.getBookInfo().getAuthors().get(0), volume.getBookInfo().getIndustryIdentifiers().get(0).getIdentifier(), volume.getBookInfo().getThumbnail().getSmallThumbnail(), type);
+                }
+                else {
+                    book = new Book(volume.getBookInfo().getTitle(), volume.getBookInfo().getAuthors().get(0), volume.getBookInfo().getIndustryIdentifiers().get(0).getIdentifier(), "", type);
+                }
                 viewModel.insert(book);
+                Toast.makeText(viewModel.getApplication().getApplicationContext(), book.getBook_title() + " was added to your list!", Toast.LENGTH_LONG).show();
             }
             else {
                 if (check_type.equals("check-in")){
                     DataFromFirebase.addDatatoFirebase(volume.getBookInfo().getTitle(), volume.getBookInfo().getAuthors(), type, bookstop);
+                    Toast.makeText(viewModel.getApplication().getApplicationContext(), volume.getBookInfo().getTitle() + " was added to " + bookstop, Toast.LENGTH_LONG).show();
                 }
                 else{
                     DataFromFirebase.removeDataFromFirebase(type, bookstop);
+                    Toast.makeText(viewModel.getApplication().getApplicationContext(), volume.getBookInfo().getTitle() + " was removed from " + bookstop, Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -154,7 +172,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(applicationContext, "channel_id_1")
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.mipmap.ic_books)
                 .setContentTitle(title)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true)

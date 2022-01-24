@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,7 +31,7 @@ public class BookListCompleteViewHolder extends RecyclerView.ViewHolder{
         bookTVtitle.setText(book.getBook_title());
         publisherTV.setText("");
         pageCountTV.setText("");
-        if (book.getImage() != null){
+        if (!book.getImage().equals("")){
             String imageUrl = book.getImage().replace("http://", "https://");
             Picasso.get().load(imageUrl).into(imageIV);
         }
@@ -40,6 +41,7 @@ public class BookListCompleteViewHolder extends RecyclerView.ViewHolder{
         remove_book_to_list.setOnClickListener(v -> {
             Log.d("o book", book.toString());
             viewModel.delete(book);
+            Toast.makeText(viewModel.getApplication().getApplicationContext(), book.getBook_title() + " was removed from your list!", Toast.LENGTH_LONG).show();
         });
     }
 

@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.Manifest;
@@ -34,8 +35,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private static final String[] CAMERA_PERMISSION = new String[]{Manifest.permission.CAMERA};
     private static final int CAMERA_REQUEST_CODE = 10;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavView = findViewById(R.id.bottomNavigationView);
 
         bottomNavView.setOnItemSelectedListener(this);
-        bottomNavView.setSelectedItemId(R.id.home);
+        bottomNavView.setSelectedItemId(R.id.home_opt);
 
         createNotificationChannel();
         handler.post(runnableCode);
@@ -101,16 +100,18 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     HomepageFragment homepageFragment = new HomepageFragment();
     BooksListFragment booksListFragment = new BooksListFragment();
     MapsFragment mapsFragment = new MapsFragment();
+    NotificationsFragment notificationsFragment = new NotificationsFragment();
 
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item){
+
         switch (item.getItemId()){
             case R.id.home_opt:
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, homepageFragment).commit();
                 return true;
             case R.id.book_opt:
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, booksListFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, booksListFragment).addToBackStack(null).commit();
                 return true;
             case R.id.camera_opt:
                 if (hasCameraPermission()) {
@@ -120,9 +121,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 }
                 return true;
             case R.id.map_opt:
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, mapsFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, mapsFragment).addToBackStack(null).commit();
                 return true;
             case R.id.notify_opt:
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, notificationsFragment).addToBackStack(null).commit();
                 return true;
         }
         return false;

@@ -5,4 +5,8 @@
     <string name="to_give">To Give</string>
     <string name="to_read">To Read</string>
     <string name="add_book">+</string>
+    <string name="see_all">See all</string>
+    <string name="add_book_to_list">Add book to list</string>
+    <string name="bookstop_id">bookstop</string>
+    <string name="check_type">check type</string>
 </resources>

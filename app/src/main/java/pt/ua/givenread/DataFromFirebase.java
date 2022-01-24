@@ -1,5 +1,6 @@
 package pt.ua.givenread;
 
+import android.app.Application;
 import android.content.Context;
 import android.os.Build;
 import android.util.Log;
@@ -7,6 +8,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -17,12 +19,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class DataFromFirebase {
+public class DataFromFirebase extends Application {
 
     private static FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://givenread-android-default-rtdb.europe-west1.firebasedatabase.app/");
     private static DatabaseReference databaseReference = firebaseDatabase.getReference("BookInfo");
 
     private static List<List<String>> booksNotified = new ArrayList<>();
+    private static List<String> notifications = new ArrayList<>();
+
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        FirebaseApp.initializeApp(this);
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+    }
 
     public static void addDatatoFirebase(String book_title, ArrayList<String> authors, String isbn, String bookstop) {
 
@@ -94,12 +105,16 @@ public class DataFromFirebase {
                             bookWithBookstop.add(s.child("bookstop").getValue().toString());
                             if(s.child("book_title").getValue().toString().equals(book.book_title) && !booksNotified.contains(bookWithBookstop)){
                                 booksNotified.add(bookWithBookstop);
-                                BookAdapter.sendNotification("Match de livros", "The book " + book.book_title + " is at " + s.child("bookstop").getValue().toString(), applicationContext);
+                                String notification_body = "The book " + book.book_title + " is at " + s.child("bookstop").getValue().toString();
+                                BookAdapter.sendNotification("You have a book match!", notification_body, applicationContext);
+                                notifications.add(notification_body);
                             }
                         }
 
                     }
                 }
+
+                Log.d("notifications", notifications.toString());
             }
 
             @Override
@@ -107,5 +122,9 @@ public class DataFromFirebase {
 
             }
         });
+    }
+
+    public static List<String> getNotifications() {
+        return notifications;
     }
 }

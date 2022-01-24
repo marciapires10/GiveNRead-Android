@@ -1,6 +1,8 @@
 package pt.ua.givenread;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -15,8 +17,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+
 
 import android.util.Log;
 import android.util.Size;
@@ -24,10 +25,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+
+import com.google.android.gms.nearby.Nearby;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.mlkit.vision.barcode.BarcodeScanner;
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions;
@@ -35,7 +34,7 @@ import com.google.mlkit.vision.barcode.BarcodeScanning;
 import com.google.mlkit.vision.barcode.common.Barcode;
 import com.google.mlkit.vision.common.InputImage;
 
-import java.util.List;
+
 import java.util.concurrent.ExecutionException;
 
 public class BarcodeScannerFragment extends Fragment {
@@ -60,6 +59,27 @@ public class BarcodeScannerFragment extends Fragment {
             bookstop = getArguments().getString("BookStop");
             check_type = getArguments().getString("CheckType");
         }
+        else {
+            new AlertDialog.Builder(getContext())
+                    .setTitle("You are at a Bookstop")
+                    .setMessage("Please scan a QR Code from the BookStop. You can choose if you want " +
+                            "to check-in or check-out a book!")
+                    .setPositiveButton(
+                            "OK",
+                            (DialogInterface dialog, int which) ->
+                                    // The user confirmed, so let's continue.
+                                    Log.d("OK", "QR code OK"))
+                    .setNegativeButton(
+                            "Cancel",
+                            (DialogInterface dialog, int which) ->
+                                    // The user canceled, so we should reject the connection.
+                            {
+                                HomepageFragment homepageFragment = new HomepageFragment();
+                                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, homepageFragment).commit();
+                            })
+                    .setIcon(android.R.drawable.ic_dialog_info)
+                    .show();
+        }
     }
 
     @Override
@@ -73,15 +93,12 @@ public class BarcodeScannerFragment extends Fragment {
 
         previewView = view.findViewById(R.id.preview_view);
 
-        cameraProviderFuture.addListener(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
-                    bindImageAnalysis(cameraProvider);
-                } catch (ExecutionException | InterruptedException e) {
-                    e.printStackTrace();
-                }
+        cameraProviderFuture.addListener(() -> {
+            try {
+                ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
+                bindImageAnalysis(cameraProvider);
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
             }
         }, ContextCompat.getMainExecutor(getContext()));
 
@@ -125,13 +142,13 @@ public class BarcodeScannerFragment extends Fragment {
                                                              getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, bookStopCheckFragment).commit();
                                                              break;
                                                          case Barcode.TYPE_ISBN:
-                                                             ISBNResultFragment fragment = new ISBNResultFragment();
+                                                             ISBNResultFragment isbnResultFragment = new ISBNResultFragment();
                                                              Bundle args = new Bundle();
                                                              args.putString("ISBNResult", rawValue);
                                                              args.putString("BookStop", bookstop);
                                                              args.putString("CheckType", check_type);
-                                                             fragment.setArguments(args);
-                                                             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                                                             isbnResultFragment.setArguments(args);
+                                                             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, isbnResultFragment).commit();
                                                              break;
                                                      }
                                                  }
@@ -145,21 +162,6 @@ public class BarcodeScannerFragment extends Fragment {
                                                  Canvas canvas = new Canvas();
                                                  RectF rect = new RectF(bounds);
                                                  canvas.drawRect(rect, rectPaint);**/
-
-
-                                                /**int valueType = barcode.getValueType();
-                                                 // See API reference for complete list of supported types
-                                                 switch (valueType) {
-                                                 case Barcode.TYPE_WIFI:
-                                                 String ssid = barcode.getWifi().getSsid();
-                                                 String password = barcode.getWifi().getPassword();
-                                                 int type = barcode.getWifi().getEncryptionType();
-                                                 break;
-                                                 case Barcode.TYPE_URL:
-                                                 String title = barcode.getUrl().getTitle();
-                                                 String url = barcode.getUrl().getUrl();
-                                                 break;
-                                                 }**/
                                             }
                                         }
                                 ).addOnCompleteListener(task -> imageProxy.close())

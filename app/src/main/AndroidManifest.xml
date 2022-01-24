@@ -16,6 +16,7 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
+
     <application
         android:fullBackupOnly="true"
         android:allowBackup="true"
@@ -26,6 +27,7 @@
         android:theme="@style/Theme.GiveNRead">
         <activity
             android:name=".BookSearchActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="false" />
         <activity
             android:name=".BookDetails"
@@ -51,7 +53,8 @@
 
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:configChanges="orientation|screenSize|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -60,5 +63,6 @@
         </activity>
 
     </application>
+
 
 </manifest>

@@ -73,14 +73,18 @@ public class BookSearchFragment extends Fragment {
 
         searchButton.setOnClickListener(v -> performSearch());
 
+
         return view;
     }
 
     public void performSearch() {
         String keyword = keywordEditText.getEditableText().toString();
 
-        Log.d("keyword", keyword);
-
-        viewModel.searchBooks(keyword);
+        if(keyword.isEmpty()){
+            keywordEditText.setError("Please insert a book title");
+        }
+        else{
+            viewModel.searchBooks(keyword);
+        }
     }
 }

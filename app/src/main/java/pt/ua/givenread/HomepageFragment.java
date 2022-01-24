@@ -60,7 +60,6 @@ public class HomepageFragment extends Fragment {
     private HashMap<String, ConnectionInfo> endpointMap = new HashMap<>();
 
     private MatchesAdapter adapter;
-    //private HashMap<String, String> booksList = new HashMap<>();
     private List<Book> booksList = new ArrayList<>();
 
     public HomepageFragment() {
@@ -125,25 +124,19 @@ public class HomepageFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
-        advertiseBtn.setOnClickListener(v -> {
-            startAdvertising();
-        });
+        advertiseBtn.setOnClickListener(v -> startAdvertising());
 
-        discoveryBtn.setOnClickListener(v -> {
-            startDiscovery();
-        });
+        discoveryBtn.setOnClickListener(v -> startDiscovery());
 
         stopBtn.setOnClickListener(v -> {
             Nearby.getConnectionsClient(getContext()).stopAllEndpoints();
             endpointMap.clear();
         });
 
-        requestBooksBtn.setOnClickListener(v -> {
-            endpointMap.forEach((key, value) -> {
-                Toast.makeText(getActivity().getApplicationContext(), "Requesting books...", Toast.LENGTH_SHORT).show();
-                send_signal(key);
-            });
-        });
+        requestBooksBtn.setOnClickListener(v -> endpointMap.forEach((key, value) -> {
+            Toast.makeText(getActivity().getApplicationContext(), "Requesting books...", Toast.LENGTH_SHORT).show();
+            send_signal(key);
+        }));
 
         matchCounterTV.setText("Number of matches: 0");
 
@@ -282,8 +275,6 @@ public class HomepageFragment extends Fragment {
 
             if (message.equals("send_books")){
                 sendMyToReadList(endpointId);
-            }
-            else if (message.equals("")){
             }
             else {
                 Gson gson = new Gson();

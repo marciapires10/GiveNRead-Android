@@ -27,6 +27,6 @@ public class BookSearchActivity extends AppCompatActivity {
         BookSearchFragment fragment = BookSearchFragment.newInstance(type);
 
         // Add the fragment.
-        fragmentTransaction.add(R.id.activity_book_search, fragment).commit();
+        fragmentTransaction.add(R.id.activity_book_search, fragment).addToBackStack(null).commit();
     }
 }

@@ -22,7 +22,7 @@ class BookListViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(String bookTitle, String image) {
         bookTVtitle.setText(bookTitle);
-        if (image != null){
+        if (!image.equals("")){
             String imageUrl = image.replace("http://", "https://");
             Picasso.get().load(imageUrl).into(imageIV);
         }

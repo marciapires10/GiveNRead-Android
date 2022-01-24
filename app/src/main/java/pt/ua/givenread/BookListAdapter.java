@@ -7,7 +7,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BookListAdapter extends ListAdapter<Book, BookListViewHolder> {
+
 
     public BookListAdapter(DiffUtil.ItemCallback<Book> diffCallback){
         super(diffCallback);
@@ -23,8 +27,6 @@ public class BookListAdapter extends ListAdapter<Book, BookListViewHolder> {
     @Override
     public void onBindViewHolder(BookListViewHolder holder, int position) {
         Book current = getItem(position);
-        Log.d("book", current.toString());
-        Log.d("current", current.getBook_title());
         holder.bind(current.getBook_title(), current.getImage());
     }
 

@@ -53,10 +53,6 @@ public class BooksListFragment extends Fragment {
         viewModel = ViewModelProviders.of(this).get(BookViewModel.class);
         viewModel.init();
 
-        /**viewModel.getBooks().observe(this, books -> {
-            adapter_list1.submitList(books);
-        });**/
-
 
         viewModel.getBooksToGive().observe(this, books -> adapter_list1.submitList(books));
 
@@ -75,10 +71,6 @@ public class BooksListFragment extends Fragment {
         recyclerView1.setLayoutManager(HorizontalLayout);
         recyclerView1.setAdapter(adapter_list1);
 
-        /**bookTV = view.findViewById(R.id.book);
-        viewModel.getBooksToGive().observe(getActivity(), books -> {
-            bookTV.setText(books.toString());
-        });**/
 
         RecyclerView recyclerView2 = view.findViewById(R.id.fragment_bookList2_RecyclerView);
         recyclerView2.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -86,16 +78,29 @@ public class BooksListFragment extends Fragment {
         recyclerView2.setLayoutManager(HorizontalLayout);
         recyclerView2.setAdapter(adapter_list2);
 
+        addTGButton = view.findViewById(R.id.addBookToGive);
+        addTRButton = view.findViewById(R.id.addBookToRead);
 
-        // Button to add book to To Give list
-        /**addTGButton = view.findViewById(R.id.addBookToGive);
+        try {
+            if(viewModel.getBooksToGiveList().isEmpty()){
+                // Button to add book to To Give list
+                addTGButton.setVisibility(View.VISIBLE);
 
-        addTGButton.setOnClickListener(v -> {
-            Context mcontext = v.getContext();
-            Intent intent = new Intent(mcontext, BookSearchActivity.class);
-            intent.putExtra("type", "ToGive");
-            mcontext.startActivity(intent);
-        });**/
+                addTGButton.setOnClickListener(v -> {
+                    Context mcontext = v.getContext();
+                    Intent intent = new Intent(mcontext, BookSearchActivity.class);
+                    intent.putExtra("type", "ToGive");
+                    mcontext.startActivity(intent);
+                });
+            }
+            else {
+                addTGButton.setVisibility(View.INVISIBLE);
+            }
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         // Button to see all list of To Give books
         seeAllTGButton = view.findViewById(R.id.seeAllToGive);
@@ -105,18 +110,31 @@ public class BooksListFragment extends Fragment {
             Bundle type_tg = new Bundle();
             type_tg.putString("Type", "ToGive");
             fragment_tg.setArguments(type_tg);
-            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment_tg).commit();
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment_tg).addToBackStack(null).commit();
         });
 
-        // Button to add book to To Read list
-        /**addTRButton = view.findViewById(R.id.addBookToRead);
 
-        addTRButton.setOnClickListener(v -> {
-            Context mcontext = v.getContext();
-            Intent intent = new Intent(mcontext, BookSearchActivity.class);
-            intent.putExtra("type", "ToRead");
-            mcontext.startActivity(intent);
-        });**/
+        try {
+            if (viewModel.getBooksToReadList().isEmpty()){
+                // Button to add book to To Read list
+                addTRButton.setVisibility(View.VISIBLE);
+
+                addTRButton.setOnClickListener(v -> {
+                    Context mcontext = v.getContext();
+                    Intent intent = new Intent(mcontext, BookSearchActivity.class);
+                    intent.putExtra("type", "ToRead");
+                    mcontext.startActivity(intent);
+                });
+            }
+            else {
+                addTRButton.setVisibility(View.INVISIBLE);
+            }
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
 
         // Button to see all list of To Read books
         seeAllTRButton = view.findViewById(R.id.seeAllToRead);
@@ -126,7 +144,7 @@ public class BooksListFragment extends Fragment {
             Bundle type_tr = new Bundle();
             type_tr.putString("Type", "ToRead");
             fragment_tr.setArguments(type_tr);
-            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment_tr).commit();
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment_tr).addToBackStack(null).commit();
         });
 
 
