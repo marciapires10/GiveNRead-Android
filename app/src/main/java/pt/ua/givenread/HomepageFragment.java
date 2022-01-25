@@ -1,9 +1,11 @@
 package pt.ua.givenread;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -106,6 +108,7 @@ public class HomepageFragment extends Fragment {
         );
     }
 
+    @SuppressLint("ResourceAsColor")
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -125,13 +128,23 @@ public class HomepageFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
-        advertiseBtn.setOnClickListener(v -> startAdvertising());
+        advertiseBtn.setOnClickListener(v -> {
+            startAdvertising();
+            advertiseBtn.setBackgroundColor(Color.GRAY);
+        });
 
-        discoveryBtn.setOnClickListener(v -> startDiscovery());
+        discoveryBtn.setOnClickListener(v -> {
+            startDiscovery();
+            discoveryBtn.setBackgroundColor(Color.GRAY);
+        });
 
         stopBtn.setOnClickListener(v -> {
             Nearby.getConnectionsClient(getContext()).stopAllEndpoints();
             endpointMap.clear();
+            Toast.makeText(getContext(), "You stopped all connections", Toast.LENGTH_SHORT).show();
+            advertiseBtn.setBackgroundColor(0xFF4c98a2);
+            discoveryBtn.setBackgroundColor(0xFF4c98a2);
+            connectionsTV.setText("You aren't connected yet");
         });
 
         requestBooksBtn.setOnClickListener(v -> endpointMap.forEach((key, value) -> {
@@ -152,6 +165,7 @@ public class HomepageFragment extends Fragment {
                         (Void unused) -> {
                             // We're advertising!
                             Log.d("Success", "Advertising with success!");
+                            Toast.makeText(getContext(), "You are advertising", Toast.LENGTH_SHORT).show();
                         }
                 ).addOnFailureListener(
                     (Exception e) -> {
@@ -168,6 +182,7 @@ public class HomepageFragment extends Fragment {
                         (Void unused) -> {
                             // We're discovering!
                             Log.d("Success", "Discovering with success!");
+                            Toast.makeText(getContext(), "You are discovering", Toast.LENGTH_SHORT).show();
                         }
                 ).addOnFailureListener(
                     (Exception e) -> {
@@ -188,10 +203,12 @@ public class HomepageFragment extends Fragment {
                             .setMessage("Confirm the code matches on both devices: " + info.getAuthenticationDigits())
                             .setPositiveButton(
                                     "Accept",
-                                    (DialogInterface dialog, int which) ->
-                                            // The user confirmed, so we can accept the connection.
-                                            Nearby.getConnectionsClient(getContext())
-                                                    .acceptConnection(endpointId, payloadCallback))
+                                    (DialogInterface dialog, int which) -> {
+                                        connectionsTV.setText("You are connected to " + endpointId);
+                                        // The user confirmed, so we can accept the connection.
+                                        Nearby.getConnectionsClient(getContext())
+                                                .acceptConnection(endpointId, payloadCallback);
+                                    })
                             .setNegativeButton(
                                     android.R.string.cancel,
                                     (DialogInterface dialog, int which) ->
@@ -207,11 +224,13 @@ public class HomepageFragment extends Fragment {
                         case ConnectionsStatusCodes.STATUS_OK:
                             // We're connected! Can now start sending and receiving data.
                             Log.d("Connection result", "status ok");
+                            Toast.makeText(getContext(), "You are now connected", Toast.LENGTH_SHORT).show();
                             sendPayload(endpointId, "");
                             break;
                         case ConnectionsStatusCodes.STATUS_CONNECTION_REJECTED:
                             // The connection was rejected by one or both sides.
                             Log.d("Connection result", "status connection rejected");
+                            Toast.makeText(getContext(), "Connection rejected", Toast.LENGTH_SHORT).show();
                             break;
                         case ConnectionsStatusCodes.STATUS_ERROR:
                             // The connection broke before it was able to be accepted.
@@ -282,6 +301,11 @@ public class HomepageFragment extends Fragment {
                 Book _book = gson.fromJson(message, Book.class);
 
 
+                if(_book == null){
+                    return;
+                }
+
+
                 List<Book> booksToGive = null;
                 try {
                     booksToGive = viewModel.getBooksToGiveList();
@@ -292,9 +316,6 @@ public class HomepageFragment extends Fragment {
                 }
 
                 for(Book book : booksToGive){
-                    Log.d("book in bookstogive", "booktogive");
-                    Log.d("give", book.toString());
-                    Log.d("_book", _book.toString());
                     if(booksList.isEmpty()){
                         if(book.getBook_title().equals(_book.getBook_title()) && book.getAuthor().equals(_book.getAuthor())){
                             booksList.add(_book);
@@ -321,7 +342,6 @@ public class HomepageFragment extends Fragment {
                     }**/
                 }
 
-                connectionsTV.setText(booksList.toString());
                 matchCounterTV.setText("Number of matches: " + booksList.size());
 
 

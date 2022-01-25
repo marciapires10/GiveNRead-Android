@@ -13,63 +13,66 @@
         android:textSize="22sp"
         android:id="@+id/match_counter">
     </TextView>
+    <Button
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/request_books_btn"
+        android:layout_column="1"
+        android:layout_row="1"
+        android:text="@string/request_books">
+    </Button>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="290dp"
         android:id="@+id/matches_recyclerview"
         tools:listitem="@layout/matches_row"/>
 
-    <GridLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:columnCount="2"
-        android:rowCount="2"
-        android:layout_gravity="end">
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:gravity="center">
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="0dip"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:id="@+id/advertise_btn"
+            android:layout_columnWeight="1"
             android:layout_column="0"
-            android:layout_row="0"
-            android:text="Advertise">
+            android:text="@string/advertise">
         </Button>
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="0dip"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:id="@+id/discovery_btn"
+            android:layout_columnWeight="1"
+            android:layout_gravity="end"
             android:layout_column="1"
-            android:layout_row="0"
-            android:text="Discovery">
+            android:text="@string/discovery">
         </Button>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/stop_connecton_btn"
-            android:layout_column="0"
-            android:layout_row="1"
-            android:text="Stop">
-        </Button>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/request_books_btn"
-            android:layout_column="1"
-            android:layout_row="1"
-            android:text="Request books">
-        </Button>
-
-    </GridLayout>
+    </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/stop_connecton_btn"
+        android:layout_row="1"
+        android:text="@string/stop_connection">
+    </Button>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/connections_id"
-        android:text="Connections here">
+        android:layout_gravity="end"
+        android:gravity="end"
+        android:textSize="14dp"
+        android:text="You aren't connected yet">
     </TextView>
 
 

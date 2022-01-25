@@ -24,7 +24,7 @@
         <entry key="app/src/main/res/layout/fragment_book_stop_check.xml" value="0.42168674698795183" />
         <entry key="app/src/main/res/layout/fragment_booksearch.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_bookslist.xml" value="0.2" />
-        <entry key="app/src/main/res/layout/fragment_homepage.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_homepage.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_isbn_result.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_maps.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.1" />

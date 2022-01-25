@@ -9,4 +9,8 @@
     <string name="add_book_to_list">Add book to list</string>
     <string name="bookstop_id">bookstop</string>
     <string name="check_type">check type</string>
+    <string name="advertise">Advertise</string>
+    <string name="discovery">Discovery</string>
+    <string name="stop_connection">Stop connection</string>
+    <string name="request_books">Request books</string>
 </resources>

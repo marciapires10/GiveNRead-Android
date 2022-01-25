@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="18dp"
-            android:layout_margin="6dp"
+            android:layout_margin="10dp"
             android:textStyle="bold"
             android:textSize="16dp"
             android:id="@+id/notification_title">
@@ -25,14 +25,14 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_margin="6dp"
+            android:layout_margin="10dp"
             android:id="@+id/notification_body">
         </TextView>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="6dp"
+            android:layout_margin="10dp"
             android:gravity="end"
             android:layout_gravity="bottom"
             android:text=">> Swipe to delete"
