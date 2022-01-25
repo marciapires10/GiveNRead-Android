@@ -62,14 +62,16 @@ public class MapsFragment extends Fragment {
             googleMap.addMarker(new MarkerOptions().position(bookstop2).title("Bookstop 2"));
             //googleMap.moveCamera(CameraUpdateFactory.newLatLng(bookstop2));
 
-            Log.d("bookstop", bookstop);
-            if(bookstop.equals("BookStop1")){
-                Log.d("entrou 1", "book1");
-                cameraPosition = new CameraPosition.Builder().target(bookstop1).zoom(18).build();
-            }
-            else if (bookstop.equals("BookStop2")){
-                Log.d("entrou 2", "book2");
-                cameraPosition = new CameraPosition.Builder().target(bookstop2).zoom(18).build();
+            if(bookstop != null){
+                if(bookstop.equals("BookStop1")){
+                    cameraPosition = new CameraPosition.Builder().target(bookstop1).zoom(18).build();
+                }
+                else if (bookstop.equals("BookStop2")){
+                    cameraPosition = new CameraPosition.Builder().target(bookstop2).zoom(18).build();
+                }
+                else {
+                    cameraPosition = new CameraPosition.Builder().target(centerCamera).zoom(14).build();
+                }
             }
             else {
                 cameraPosition = new CameraPosition.Builder().target(centerCamera).zoom(14).build();

@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Fragment;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
@@ -31,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private static MainActivity instance;
     BookViewModel viewModel;
     Handler handler = new Handler();
+
+    private Fragment previousFragment;
 
     BottomNavigationView bottomNavView;
     ActionBar actionBar;
@@ -112,8 +115,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     private void enableCamera() {
-        //Intent intent = new Intent(this, BarcodeScannerActivity.class);
-        //startActivity(intent);
         BarcodeScannerFragment barcodeScannerFragment = new BarcodeScannerFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.container, barcodeScannerFragment).commit();
 

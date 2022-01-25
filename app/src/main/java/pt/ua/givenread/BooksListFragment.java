@@ -83,10 +83,6 @@ public class BooksListFragment extends Fragment {
                 addTGButton.setVisibility(View.VISIBLE);
 
                 addTGButton.setOnClickListener(v -> {
-                    /**Context mcontext = v.getContext();
-                    Intent intent = new Intent(mcontext, BookSearchActivity.class);
-                    intent.putExtra("type", "ToGive");
-                    mcontext.startActivity(intent);**/
                     BookSearchFragment fragment = new BookSearchFragment();
                     Bundle args = new Bundle();
                     args.putString("type", "ToGive");
@@ -121,10 +117,6 @@ public class BooksListFragment extends Fragment {
                 addTRButton.setVisibility(View.VISIBLE);
 
                 addTRButton.setOnClickListener(v -> {
-                    /**Context mcontext = v.getContext();
-                    Intent intent = new Intent(mcontext, BookSearchActivity.class);
-                    intent.putExtra("type", "ToRead");
-                    mcontext.startActivity(intent);**/
                     BookSearchFragment fragment = new BookSearchFragment();
                     Bundle args = new Bundle();
                     args.putString("type", "ToRead");

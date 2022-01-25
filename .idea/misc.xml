@@ -20,14 +20,14 @@
         <entry key="app/src/main/res/layout/book_item_prev.xml" value="0.33" />
         <entry key="app/src/main/res/layout/book_search.xml" value="0.3129528985507246" />
         <entry key="app/src/main/res/layout/fragment_barcode_scanner.xml" value="0.23020833333333332" />
-        <entry key="app/src/main/res/layout/fragment_book_list_complete.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/fragment_book_list_complete.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_book_stop_check.xml" value="0.42168674698795183" />
         <entry key="app/src/main/res/layout/fragment_booksearch.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_bookslist.xml" value="0.2" />
-        <entry key="app/src/main/res/layout/fragment_homepage.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/fragment_homepage.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_isbn_result.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_maps.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_maps.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.18" />
         <entry key="app/src/main/res/layout/matches_row.xml" value="0.17407407407407408" />
         <entry key="app/src/main/res/layout/mynavgraph.xml" value="0.1" />
         <entry key="app/src/main/res/layout/notifications_row.xml" value="0.25" />

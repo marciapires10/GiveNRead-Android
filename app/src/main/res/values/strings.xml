@@ -14,4 +14,8 @@
     <string name="stop_connection">Stop connection</string>
     <string name="request_books">Request books</string>
     <string name="search_for_book">Search for book</string>
+    <string name="you_aren_t_connected_yet">You aren\'t connected yet</string>
+    <string name="number_of_matches">Number of matches :</string>
+    <string name="swipe_to_delete"><![CDATA[>> Swipe to delete]]></string>
+    <string name="scan_your_book">Scan your book</string>
 </resources>

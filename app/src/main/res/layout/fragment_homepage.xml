@@ -1,81 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="16dp"
-    android:orientation="vertical"
     tools:context=".HomepageFragment">
 
     <TextView
+        android:id="@+id/match_counter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="22sp"
-        android:id="@+id/match_counter">
-    </TextView>
+        android:text="@string/number_of_matches"
+        android:textSize="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_editor_absoluteY="16dp"></TextView>
+
     <Button
-        android:layout_width="160dp"
-        android:layout_height="wrap_content"
         android:id="@+id/request_books_btn"
-        android:layout_column="1"
-        android:layout_row="1"
-        android:text="@string/request_books">
-    </Button>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/request_books"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/match_counter"
+        tools:layout_editor_absoluteX="2dp"></Button>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="290dp"
         android:id="@+id/matches_recyclerview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:scrollbars="vertical"
-        tools:listitem="@layout/matches_row"/>
+        app:layout_constraintBottom_toTopOf="@+id/advertise_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/request_books_btn"
+        app:layout_constraintVertical_bias="0.0"
+        tools:listitem="@layout/matches_row" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        android:gravity="center">
-
-        <Button
-            android:layout_width="0dip"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:id="@+id/advertise_btn"
-            android:layout_columnWeight="1"
-            android:layout_column="0"
-            android:padding="10dp"
-            android:text="@string/advertise">
-        </Button>
-
-        <Button
-            android:layout_width="0dip"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:id="@+id/discovery_btn"
-            android:layout_columnWeight="1"
-            android:layout_gravity="end"
-            android:layout_column="1"
-            android:text="@string/discovery">
-        </Button>
-
-    </LinearLayout>
     <Button
+        android:id="@+id/stop_connecton_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/stop_connecton_btn"
-        android:layout_row="1"
-        android:text="@string/stop_connection">
-    </Button>
+        android:text="@string/stop_connection"
+        app:layout_constraintBottom_toTopOf="@+id/connections_id"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"></Button>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/connections_id"
-        android:layout_gravity="end"
+        android:layout_width="185dp"
+        android:layout_height="20dp"
+        android:layout_marginBottom="4dp"
         android:gravity="end"
+        android:text="@string/you_aren_t_connected_yet"
         android:textSize="14dp"
-        android:text="You aren't connected yet">
-    </TextView>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.929"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"></TextView>
+
+    <Button
+        android:id="@+id/discovery_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/discovery"
+        app:layout_constraintBottom_toTopOf="@+id/stop_connecton_btn"
+        app:layout_constraintEnd_toEndOf="parent"></Button>
+
+    <Button
+        android:id="@+id/advertise_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/advertise"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/stop_connecton_btn"
+        app:layout_constraintEnd_toStartOf="@+id/discovery_btn"></Button>
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

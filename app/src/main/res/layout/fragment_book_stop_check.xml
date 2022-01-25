@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="16dp"
     tools:context=".BookStopCheckFragment"
     android:orientation="vertical">
@@ -12,32 +13,47 @@
         android:layout_height="wrap_content"
         android:id="@+id/bookstop_id"
         android:text="@string/bookstop_id"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         android:textSize="30sp"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_margin="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bookstop_id"
+        android:id="@+id/divider"
         android:background="@android:color/darker_gray"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider"
         android:id="@+id/check_type"
         android:text="@string/check_type"
         android:textSize="22sp"/>
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="200dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:id="@+id/space"
+        app:layout_constraintTop_toBottomOf="@+id/divider">
     </Space>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Scan your book"
-        android:layout_gravity="center"
+        android:text="@string/scan_your_book"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/space"
         android:id="@+id/scan_book">
     </Button>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
