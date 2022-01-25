@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -167,10 +168,8 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         intent.putExtra("menuFragment", "MapsFragment");
         Log.d("NOTIFICATION", bookstop);
         intent.putExtra("Bookstop", bookstop);
-        MainActivity.getInstance().setNotification("MapsFragment", bookstop);
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(applicationContext, 0, intent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
+        intent.setAction(bookstop.toString());
+        PendingIntent pendingIntent =  PendingIntent.getActivity(applicationContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
