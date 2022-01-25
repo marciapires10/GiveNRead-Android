@@ -1,26 +1,17 @@
 package pt.ua.givenread;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.google.common.util.concurrent.ListenableFuture;
-
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-
-import io.reactivex.Flowable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 
 public class BookViewModel extends AndroidViewModel {
     private BooksClient bookClient;
     private LiveData<VolumesResponse> volumeResponseLiveData;
-    private LiveData<List<Book>> books;
     private LiveData<List<Book>> booksToGive;
     private LiveData<List<Book>> booksToRead;
 
@@ -32,7 +23,7 @@ public class BookViewModel extends AndroidViewModel {
     public void init(){
         bookClient = new BooksClient(getApplication());
         volumeResponseLiveData = bookClient.getVolumesResponseLiveData();
-        books = bookClient.getBooks();
+        LiveData<List<Book>> books = bookClient.getBooks();
         booksToGive = bookClient.getBooksToGive();
         booksToRead = bookClient.getBooksToRead();
     }
@@ -43,10 +34,6 @@ public class BookViewModel extends AndroidViewModel {
 
     public void searchBookByISBN(String isbn){
         bookClient.searchBookByISBN(isbn);
-    }
-
-    public LiveData<List<Book>> getBooks(){
-        return books;
     }
 
     public LiveData<List<Book>> getBooksToGive() { return booksToGive;}
@@ -62,10 +49,6 @@ public class BookViewModel extends AndroidViewModel {
     }
 
     public void delete(Book book) { bookClient.delete(book);}
-
-    public void deleteAll(){
-        bookClient.deleteAll();
-    }
 
     public void insert(Book book){
         bookClient.insert(book);

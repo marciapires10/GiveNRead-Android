@@ -11,23 +11,23 @@ public class Book {
     @PrimaryKey
     @NonNull
     @ColumnInfo(name = "book_title")
-    public String book_title;
+    public final String book_title;
 
     @ColumnInfo(name = "author")
-    public String author;
+    public final String author;
 
     @NonNull
     @ColumnInfo(name = "isbn")
-    public String isbn;
+    public final String isbn;
 
     @ColumnInfo(name = "image")
-    public String image;
+    public final String image;
 
     @NonNull
     @ColumnInfo(name = "type")
-    public String type;
+    public final String type;
 
-    public Book(String book_title, String author, String isbn, String image, String type){
+    public Book(@NonNull String book_title, String author, @NonNull String isbn, String image, @NonNull String type){
         this.book_title = book_title;
         this.author = author;
         this.isbn = isbn;
@@ -40,24 +40,12 @@ public class Book {
         return book_title;
     }
 
-    public void setBook_title(@NonNull String book_title) {
-        this.book_title = book_title;
-    }
-
     public String getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
     public String getImage() {
         return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     @NonNull
@@ -65,19 +53,12 @@ public class Book {
         return isbn;
     }
 
-    public void setIsbn(@NonNull String isbn) {
-        this.isbn = isbn;
-    }
-
     @NonNull
     public String getType() {
         return type;
     }
 
-    public void setType(@NonNull String type) {
-        this.type = type;
-    }
-
+    @NonNull
     @Override
     public String toString(){
         return "[Book -> " + getBook_title() + ", " + getAuthor() + ", " + getIsbn() + ", " + getImage() + ", " + getType() + "]";

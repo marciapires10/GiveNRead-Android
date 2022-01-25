@@ -1,9 +1,7 @@
 package pt.ua.givenread;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +15,8 @@ import java.util.List;
 
 public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdapter.NotificationsViewHolder> {
 
-    Context context;
-    private List<List<String>> notifications;
+    final Context context;
+    private final List<List<String>> notifications;
 
     public NotificationsAdapter(Context context, List<List<String>> notifications) {
         this.context = context;
@@ -63,9 +61,10 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         notifyItemRemoved(position);
     }
 
-    public class NotificationsViewHolder extends RecyclerView.ViewHolder {
+    public static class NotificationsViewHolder extends RecyclerView.ViewHolder {
 
-        TextView titleTV, messageBodyTV;
+        final TextView titleTV;
+        final TextView messageBodyTV;
 
         public NotificationsViewHolder(@NonNull View itemView) {
             super(itemView);

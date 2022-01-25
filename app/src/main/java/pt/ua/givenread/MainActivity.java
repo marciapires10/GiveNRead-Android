@@ -2,36 +2,28 @@ package pt.ua.givenread;
 
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 
-import com.google.android.gms.nearby.connection.Strategy;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private static MainActivity instance;
     BookViewModel viewModel;
-    Handler handler = new Handler();
+    final Handler handler = new Handler();
     public Fragment previous_fragment;
     public boolean last_fragment = true;
     BottomNavigationView bottomNavView;
@@ -78,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     }
 
-    private Runnable runnableCode = new Runnable() {
+    private final Runnable runnableCode = new Runnable() {
         @Override
         public void run() {
             DataFromFirebase.getAllDataFromFirebase(viewModel, getApplicationContext());
@@ -100,13 +92,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
     }
 
-    private boolean hasCameraPermission() {
-        return ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.CAMERA
-        ) == PackageManager.PERMISSION_GRANTED;
-    }
-
     private void requestPermission() {
         ActivityCompat.requestPermissions(
                 this,
@@ -123,10 +108,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     }
 
-    HomepageFragment homepageFragment = new HomepageFragment();
-    BooksListFragment booksListFragment = new BooksListFragment();
-    MapsFragment mapsFragment = new MapsFragment();
-    NotificationsFragment notificationsFragment = new NotificationsFragment();
+    final HomepageFragment homepageFragment = new HomepageFragment();
+    final BooksListFragment booksListFragment = new BooksListFragment();
+    final MapsFragment mapsFragment = new MapsFragment();
+    final NotificationsFragment notificationsFragment = new NotificationsFragment();
 
 
     @Override

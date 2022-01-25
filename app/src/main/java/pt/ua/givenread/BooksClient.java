@@ -8,16 +8,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 
-import com.google.common.util.concurrent.ListenableFuture;
-
-import org.intellij.lang.annotations.Flow;
-
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import java.util.function.Consumer;
 
-import io.reactivex.Flowable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -105,9 +98,7 @@ public class BooksClient {
     }
 
     void deleteAll(){
-        BookRoomDatabase.databaseWriteExecutor.execute(() -> {
-            bookDao.deleteAll();
-        });
+        BookRoomDatabase.databaseWriteExecutor.execute(bookDao::deleteAll);
     }
 
     void insert(Book book){
@@ -121,7 +112,7 @@ public class BooksClient {
     }
 
     private static class getToGiveAsync extends android.os.AsyncTask<Void, Void, List<Book>> {
-        private BookDao mAsyncTaskDao;
+        private final BookDao mAsyncTaskDao;
 
         getToGiveAsync(BookDao dao) {
             mAsyncTaskDao = dao;
@@ -139,7 +130,7 @@ public class BooksClient {
 
     private static class getToReadAsync extends android.os.AsyncTask<Void, Void, List<Book>> {
 
-        private BookDao mAsyncTaskDao;
+        private final BookDao mAsyncTaskDao;
 
         getToReadAsync(BookDao dao) {
             mAsyncTaskDao = dao;

@@ -1,14 +1,10 @@
 package pt.ua.givenread;
 
-import android.util.Log;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class BookListAdapter extends ListAdapter<Book, BookListViewHolder> {
 

@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 
 public class ISBNResultFragment extends Fragment {
@@ -19,7 +18,6 @@ public class ISBNResultFragment extends Fragment {
     private String isbnResult;
     private String bookstop;
     private String check_type;
-    private TextView isbnTV;
 
     private BookViewModel viewModel;
     private BookAdapter adapter;
@@ -41,7 +39,7 @@ public class ISBNResultFragment extends Fragment {
 
         viewModel = ViewModelProviders.of(this).get(BookViewModel.class);
         viewModel.init();
-        adapter = new BookAdapter(getContext(), viewModel, isbnResult, bookstop, check_type);
+        adapter = new BookAdapter(viewModel, isbnResult, bookstop, check_type);
         viewModel.getVolumeResponseLiveData().observe(this, volumesResponse -> {
             if (volumesResponse != null) {
                 adapter.setBookResults(volumesResponse.getItems());

@@ -1,10 +1,7 @@
 <resources>
     <string name="app_name">GiveNRead</string>
-    <string name="title_activity_maps">MapsActivity</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="to_give">To Give</string>
     <string name="to_read">To Read</string>
-    <string name="add_book">+</string>
     <string name="see_all">See all</string>
     <string name="add_book_to_list">Add book to list</string>
     <string name="bookstop_id">bookstop</string>
@@ -17,4 +14,17 @@
     <string name="swipe_to_delete"><![CDATA[>> Swipe to delete]]></string>
     <string name="scan_your_book">Scan your book</string>
     <string name="start_connection">Start connection</string>
+    <string name="book_cover">book cover</string>
+    <string name="book_title">Book Title</string>
+    <string name="publisher">Publisher</string>
+    <string name="page_count">Page count</string>
+    <string name="add">ADD</string>
+    <string name="home">Home</string>
+    <string name="books">Books</string>
+    <string name="camera">Camera</string>
+    <string name="location">Location</string>
+    <string name="notifications">Notifications</string>
+    <string name="book_title_hint">Book title</string>
+    <string name="search">Search</string>
+    <string name="fab_button">fab_button</string>
 </resources>

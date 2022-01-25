@@ -105,10 +105,6 @@ public class BookInfo {
         return imageLinks;
     }
 
-    public void VolumeImageLinks(String thumbnail) {
-        this.imageLinks = imageLinks;
-    }
-
     public String getPreviewLink() {
         return previewLink;
     }
@@ -163,69 +159,26 @@ public class BookInfo {
 
     }
 
-    public BookInfo(String title, String subtitle, ArrayList<String> authors, String publisher, String publishedDate, String description, int pageCount, VolumeImageLinks imageLinks, ArrayList<VolumeIndustryIdentifiers> industryIdentifiers, String previewLink, String infoLink, String buyLink) {
-        this.title = title;
-        this.subtitle = subtitle;
-        this.authors = authors;
-        this.publisher = publisher;
-        this.publishedDate = publishedDate;
-        this.description = description;
-        this.pageCount = pageCount;
-        this.imageLinks = imageLinks;
-        this.industryIdentifiers = industryIdentifiers;
-        this.previewLink = previewLink;
-        this.infoLink = infoLink;
-        this.buyLink = buyLink;
-    }
-
     static class BookInfoFirebase{
         @SerializedName("book_title")
         @Expose
+        final
         String book_title;
 
         @SerializedName("authors")
         @Expose
+        final
         ArrayList<String> authors;
 
         @SerializedName("isbn")
         @Expose
+        final
         String isbn;
 
         @SerializedName("bookstop")
         @Expose
+        final
         String bookstop;
-
-        public String getBook_title() {
-            return book_title;
-        }
-
-        public void setBook_title(String book_title) {
-            this.book_title = book_title;
-        }
-
-        public ArrayList<String> getAuthors() {
-            return authors;
-        }
-
-        public void setAuthors(ArrayList<String> authors) {
-            this.authors = authors;
-        }
-
-        public String getIsbn() {
-            return isbn;
-        }
-
-        public void setIsbn(String isbn) {
-            this.isbn = isbn;
-        }
-
-        public String getBookstop() {
-            return bookstop;
-        }
-
-        public void setBookstop(String bookstop) {
-            this.bookstop = bookstop;
-        }
 
         @Override
         public String toString() {
@@ -237,8 +190,20 @@ public class BookInfo {
                     '}';
         }
 
-        public BookInfoFirebase(){
+        public String getBook_title() {
+            return book_title;
+        }
 
+        public ArrayList<String> getAuthors() {
+            return authors;
+        }
+
+        public String getIsbn() {
+            return isbn;
+        }
+
+        public String getBookstop() {
+            return bookstop;
         }
 
         public BookInfoFirebase(String book_title, ArrayList<String> authors, String isbn, String bookstop) {

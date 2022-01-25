@@ -3,7 +3,6 @@ package pt.ua.givenread;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.media.Image;
@@ -27,7 +26,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 
-import com.google.android.gms.nearby.Nearby;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.mlkit.vision.barcode.BarcodeScanner;
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions;
@@ -58,6 +56,7 @@ public class BarcodeScannerFragment extends Fragment {
 
         if (getArguments() != null && getArguments().containsKey("BookStop") && getArguments().containsKey("CheckType")) {
             bookstop = getArguments().getString("BookStop");
+            assert getArguments() != null;
             check_type = getArguments().getString("CheckType");
 
             setCameraProviderFuture();
@@ -80,7 +79,7 @@ public class BarcodeScannerFragment extends Fragment {
                                     // The user canceled, so we should reject the connection.
                             {
                                 HomepageFragment homepageFragment = new HomepageFragment();
-                                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, homepageFragment).commit();
+                                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, homepageFragment).commit();
                             })
                     .setIcon(android.R.drawable.ic_dialog_info)
                     .setCancelable(false)
@@ -99,15 +98,6 @@ public class BarcodeScannerFragment extends Fragment {
 
         previewView = view.findViewById(R.id.preview_view);
 
-        /**cameraProviderFuture.addListener(() -> {
-            try {
-                ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
-                bindImageAnalysis(cameraProvider);
-            } catch (ExecutionException | InterruptedException e) {
-                e.printStackTrace();
-            }
-        }, ContextCompat.getMainExecutor(getContext()));**/
-
         //setCameraProviderFuture();
 
         return view;
@@ -117,7 +107,7 @@ public class BarcodeScannerFragment extends Fragment {
         ImageAnalysis imageAnalysis =
                 new ImageAnalysis.Builder().setTargetResolution(new Size(1280, 720))
                         .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST).build();
-        imageAnalysis.setAnalyzer(ContextCompat.getMainExecutor(getContext()),
+        imageAnalysis.setAnalyzer(ContextCompat.getMainExecutor(requireContext()),
                 imageProxy -> {
                     @SuppressLint("UnsafeOptInUsageError") Image img = imageProxy.getImage();
 
@@ -151,10 +141,10 @@ public class BarcodeScannerFragment extends Fragment {
                                                              Bundle qrcode_args = new Bundle();
                                                              qrcode_args.putString("ScanResult", rawValue);
                                                              bookStopCheckFragment.setArguments(qrcode_args);
-                                                             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, bookStopCheckFragment).commit();
+                                                             requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, bookStopCheckFragment).commit();
                                                          }
                                                          else if(!was_warned){
-                                                             Toast.makeText(getActivity().getApplicationContext(), "Please read a valid QR Code", Toast.LENGTH_SHORT).show();
+                                                             Toast.makeText(requireActivity().getApplicationContext(), "Please read a valid QR Code", Toast.LENGTH_SHORT).show();
                                                             was_warned = true;
                                                          }
                                                      }
@@ -166,46 +156,20 @@ public class BarcodeScannerFragment extends Fragment {
                                                              args.putString("BookStop", bookstop);
                                                              args.putString("CheckType", check_type);
                                                              isbnResultFragment.setArguments(args);
-                                                             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, isbnResultFragment).commit();
+                                                             requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, isbnResultFragment).commit();
                                                          }
                                                          else if(!was_warned){
-                                                             Toast.makeText(getActivity().getApplicationContext(), "Please read a valid ISBN", Toast.LENGTH_SHORT).show();
+                                                             Toast.makeText(requireActivity().getApplicationContext(), "Please read a valid ISBN", Toast.LENGTH_SHORT).show();
                                                              was_warned = true;
                                                          }
                                                      }
-                                                     /**switch (valueType) {
-                                                         case Barcode.TYPE_TEXT:
-                                                             BookStopCheckFragment bookStopCheckFragment = new BookStopCheckFragment();
-                                                             Bundle qrcode_args = new Bundle();
-                                                             qrcode_args.putString("ScanResult", rawValue);
-                                                             bookStopCheckFragment.setArguments(qrcode_args);
-                                                             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, bookStopCheckFragment).commit();
-                                                             break;
-                                                         case Barcode.TYPE_ISBN:
-                                                             ISBNResultFragment isbnResultFragment = new ISBNResultFragment();
-                                                             Bundle args = new Bundle();
-                                                             args.putString("ISBNResult", rawValue);
-                                                             args.putString("BookStop", bookstop);
-                                                             args.putString("CheckType", check_type);
-                                                             isbnResultFragment.setArguments(args);
-                                                             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, isbnResultFragment).commit();
-                                                             break;
-                                                     }**/
                                                  }
 
 
-                                                /**rectPaint = new Paint();
-                                                 rectPaint.setColor(boxColor);
-                                                 rectPaint.setStyle(Paint.Style.STROKE);
-                                                 rectPaint.setStrokeWidth(strokeWidth);
-
-                                                 Canvas canvas = new Canvas();
-                                                 RectF rect = new RectF(bounds);
-                                                 canvas.drawRect(rect, rectPaint);**/
                                             }
                                         }
                                 ).addOnCompleteListener(task -> imageProxy.close())
-                                .addOnFailureListener(e -> e.printStackTrace());
+                                .addOnFailureListener(Throwable::printStackTrace);
                     }
                 });
 
@@ -218,7 +182,7 @@ public class BarcodeScannerFragment extends Fragment {
     }
 
     public void setCameraProviderFuture(){
-        cameraProviderFuture = ProcessCameraProvider.getInstance(getContext());
+        cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext());
 
         cameraProviderFuture.addListener(() -> {
             try {

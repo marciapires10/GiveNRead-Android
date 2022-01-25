@@ -14,7 +14,6 @@ import android.widget.TextView;
 public class BookStopCheckFragment extends Fragment {
 
     private String scanResult = "";
-    private String[] result;
     private String bookstop = "";
     private String check_type = "";
     TextView bookstop_idTV, check_typeTV;
@@ -42,7 +41,7 @@ public class BookStopCheckFragment extends Fragment {
         check_typeTV = view.findViewById(R.id.check_type);
         scanBook = view.findViewById(R.id.scan_book);
 
-        result = scanResult.split(", ", 2);
+        String[] result = scanResult.split(", ", 2);
         bookstop = result[0];
         check_type = result[1];
 
