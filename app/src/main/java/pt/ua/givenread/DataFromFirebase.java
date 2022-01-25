@@ -107,7 +107,6 @@ public class DataFromFirebase extends Application {
                             if(s.child("book_title").getValue().toString().equals(book.book_title) && !booksNotified.contains(bookWithBookstop)){
                                 booksNotified.add(bookWithBookstop);
                                 String bookstop_id = s.child("bookstop").getValue().toString();
-                                Log.d("datafromfirebase", bookstop_id);
                                 String notification_body = "The book " + book.book_title + " is at " + bookstop_id;
                                 BookAdapter.sendNotification("You have a book match!", notification_body, applicationContext, bookstop_id);
                                 List<String> bookstop = new ArrayList<>();
@@ -115,17 +114,12 @@ public class DataFromFirebase extends Application {
                                 bookstop.add(notification_body);
                                 notifications.add(bookstop);
                                 matches_found += 1;
-                                //notifications.add(notification_body);
-                                /**bottomNavView = ((MainActivity)getActivity()).getBottomNavView();
-                                Log.d("notfica", String.valueOf(DataFromFirebase.getNotifications().size()));
-                                bottomNavView.getOrCreateBadge(R.id.notify_opt).setNumber(DataFromFirebase.getNotifications().size());**/
                             }
                         }
 
                     }
                 }
                 MainActivity.getInstance().updateNotificationsNumber(matches_found);
-                Log.d("notifications", notifications.toString());
             }
 
             @Override

@@ -52,7 +52,7 @@ import java.util.concurrent.ExecutionException;
 
 public class HomepageFragment extends Fragment {
 
-    private Button advertiseBtn, discoveryBtn, stopBtn, requestBooksBtn;
+    private Button startBtn, discoveryBtn, stopBtn, requestBooksBtn;
     private TextView connectionsTV, matchCounterTV;
     private String username = String.valueOf(new Random().nextInt(10000));
 
@@ -117,8 +117,7 @@ public class HomepageFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_homepage, container, false);
 
 
-        advertiseBtn = view.findViewById(R.id.advertise_btn);
-        discoveryBtn = view.findViewById(R.id.discovery_btn);
+        startBtn = view.findViewById(R.id.start_btn);
         stopBtn = view.findViewById(R.id.stop_connecton_btn);
         requestBooksBtn = view.findViewById(R.id.request_books_btn);
         connectionsTV = view.findViewById(R.id.connections_id);
@@ -128,22 +127,17 @@ public class HomepageFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
-        advertiseBtn.setOnClickListener(v -> {
+        startBtn.setOnClickListener(v -> {
             startAdvertising();
-            advertiseBtn.setBackgroundColor(Color.GRAY);
-        });
-
-        discoveryBtn.setOnClickListener(v -> {
             startDiscovery();
-            discoveryBtn.setBackgroundColor(Color.GRAY);
+            startBtn.setBackgroundColor(Color.GRAY);
         });
 
         stopBtn.setOnClickListener(v -> {
             Nearby.getConnectionsClient(getContext()).stopAllEndpoints();
             endpointMap.clear();
             Toast.makeText(getContext(), "You stopped all connections", Toast.LENGTH_SHORT).show();
-            advertiseBtn.setBackgroundColor(0xFF4c98a2);
-            discoveryBtn.setBackgroundColor(0xFF4c98a2);
+            startBtn.setBackgroundColor(0xFF4c98a2);
             connectionsTV.setText("You aren't connected yet");
         });
 
@@ -334,12 +328,6 @@ public class HomepageFragment extends Fragment {
                             }
                         }
                     }
-                    /**if (book.getBook_title().equals(_book.getBook_title()) && book.getAuthor().equals(_book.getAuthor())
-                            && !(booksList.containsKey(_book.getBook_title())) && !(booksList.containsValue(_book.getAuthor()))) {
-
-                        booksList.put(_book.getBook_title(), _book.getAuthor());
-                        Log.d("deu match", "match: " + _book.getBook_title());
-                    }**/
                 }
 
                 matchCounterTV.setText("Number of matches: " + booksList.size());

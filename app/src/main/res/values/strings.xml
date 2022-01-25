@@ -9,8 +9,6 @@
     <string name="add_book_to_list">Add book to list</string>
     <string name="bookstop_id">bookstop</string>
     <string name="check_type">check type</string>
-    <string name="advertise">Advertise</string>
-    <string name="discovery">Discovery</string>
     <string name="stop_connection">Stop connection</string>
     <string name="request_books">Request books</string>
     <string name="search_for_book">Search for book</string>
@@ -18,4 +16,5 @@
     <string name="number_of_matches">Number of matches :</string>
     <string name="swipe_to_delete"><![CDATA[>> Swipe to delete]]></string>
     <string name="scan_your_book">Scan your book</string>
+    <string name="start_connection">Start connection</string>
 </resources>
