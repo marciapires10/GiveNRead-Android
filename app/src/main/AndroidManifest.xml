@@ -25,13 +25,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GiveNRead">
-        <!--<activity
-            android:name=".BookSearchActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:exported="false" />-->
-        <activity
-            android:name=".BookDetails"
-            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.gms.version"

@@ -1,15 +1,12 @@
 package pt.ua.givenread;
 
-import android.content.ClipData;
-
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
 
-    private NotificationsAdapter adapter;
+    private final NotificationsAdapter adapter;
 
     public SwipeToDeleteCallback(NotificationsAdapter adapter){
         super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);

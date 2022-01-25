@@ -39,7 +39,6 @@ import com.google.android.gms.nearby.connection.Payload;
 import com.google.android.gms.nearby.connection.PayloadCallback;
 import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
 import com.google.android.gms.nearby.connection.Strategy;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 
 
@@ -52,18 +51,18 @@ import java.util.concurrent.ExecutionException;
 
 public class HomepageFragment extends Fragment {
 
-    private Button startBtn, discoveryBtn, stopBtn, requestBooksBtn;
+    private Button startBtn;
     private TextView connectionsTV, matchCounterTV;
-    private String username = String.valueOf(new Random().nextInt(10000));
+    private final String username = String.valueOf(new Random().nextInt(10000));
 
     private static final String[] LOCATION_PERMISSION = new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
     private static final int LOCATION_REQUEST_CODE = 20;
 
     private BookViewModel viewModel;
-    private HashMap<String, ConnectionInfo> endpointMap = new HashMap<>();
+    private final HashMap<String, ConnectionInfo> endpointMap = new HashMap<>();
 
     private MatchesAdapter adapter;
-    private List<Book> booksList = new ArrayList<>();
+    private final List<Book> booksList = new ArrayList<>();
 
     public HomepageFragment() {
         // Required empty public constructor
@@ -76,7 +75,7 @@ public class HomepageFragment extends Fragment {
 
         viewModel = ViewModelProviders.of(this).get(BookViewModel.class);
         viewModel.init();
-        adapter = new MatchesAdapter(getContext(), booksList);
+        adapter = new MatchesAdapter(booksList);
 
         if (hasCoarseLocationPermission() && hasFineLocationPermission()) {
            Log.d("Location permission", "Has location permission");
@@ -118,8 +117,8 @@ public class HomepageFragment extends Fragment {
 
 
         startBtn = view.findViewById(R.id.start_btn);
-        stopBtn = view.findViewById(R.id.stop_connecton_btn);
-        requestBooksBtn = view.findViewById(R.id.request_books_btn);
+        Button stopBtn = view.findViewById(R.id.stop_connecton_btn);
+        Button requestBooksBtn = view.findViewById(R.id.request_books_btn);
         connectionsTV = view.findViewById(R.id.connections_id);
         matchCounterTV = view.findViewById(R.id.match_counter);
 
@@ -340,6 +339,7 @@ public class HomepageFragment extends Fragment {
         public void onPayloadTransferUpdate(@NonNull String s, @NonNull PayloadTransferUpdate payloadTransferUpdate) {
             if (payloadTransferUpdate.getStatus() == PayloadTransferUpdate.Status.SUCCESS) {
                 // Do something with is here...
+                Log.d("Payload transfer update", "Payload transfer with success!");
             }
         }
     };

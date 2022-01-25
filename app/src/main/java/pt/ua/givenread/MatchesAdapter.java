@@ -1,6 +1,5 @@
 package pt.ua.givenread;
 
-import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,16 +9,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchesViewHolder> {
 
-    private Context context;
     private List<Book> matchesList;
 
-    public MatchesAdapter(Context context, List<Book> matchesList){
-        this.context = context;
+    public MatchesAdapter(List<Book> matchesList){
         this.matchesList = matchesList;
     }
 
@@ -53,9 +49,10 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchesV
         notifyDataSetChanged();
     }
 
-    public class MatchesViewHolder extends RecyclerView.ViewHolder {
+    public static class MatchesViewHolder extends RecyclerView.ViewHolder {
 
-        TextView matchBookTitleTV, matchBookAuthorTV;
+        final TextView matchBookTitleTV;
+        final TextView matchBookAuthorTV;
 
         public MatchesViewHolder(@NonNull View itemView) {
             super(itemView);

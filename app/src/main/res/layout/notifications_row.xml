@@ -18,7 +18,7 @@
             android:layout_height="18dp"
             android:layout_margin="10dp"
             android:textStyle="bold"
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:id="@+id/notification_title">
         </TextView>
 
@@ -36,8 +36,7 @@
             android:gravity="end"
             android:layout_gravity="bottom"
             android:text="@string/swipe_to_delete"
-            android:textStyle="italic"
-            android:id="@+id/notification_delete">
+            android:textStyle="italic">
         </TextView>
     </LinearLayout>
 

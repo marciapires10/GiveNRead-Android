@@ -19,7 +19,8 @@ app:cardElevation="8dp">
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp" />
+        android:layout_marginBottom="10dp"
+        android:contentDescription="@string/book_cover" />
 
     <TextView
         android:id="@+id/book_prev_title"

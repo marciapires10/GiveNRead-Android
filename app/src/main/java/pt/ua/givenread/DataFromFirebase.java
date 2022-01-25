@@ -21,11 +21,11 @@ import java.util.concurrent.ExecutionException;
 
 public class DataFromFirebase extends Application {
 
-    private static FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://givenread-android-default-rtdb.europe-west1.firebasedatabase.app/");
-    private static DatabaseReference databaseReference = firebaseDatabase.getReference("BookInfo");
+    private static final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://givenread-android-default-rtdb.europe-west1.firebasedatabase.app/");
+    private static final DatabaseReference databaseReference = firebaseDatabase.getReference("BookInfo");
 
-    private static List<List<String>> booksNotified = new ArrayList<>();
-    private static List<List<String>> notifications = new ArrayList<>();
+    private static final List<List<String>> booksNotified = new ArrayList<>();
+    private static final List<List<String>> notifications = new ArrayList<>();
 
 
     @Override
@@ -108,7 +108,7 @@ public class DataFromFirebase extends Application {
                                 booksNotified.add(bookWithBookstop);
                                 String bookstop_id = s.child("bookstop").getValue().toString();
                                 String notification_body = "The book " + book.book_title + " is at " + bookstop_id;
-                                BookAdapter.sendNotification("You have a book match!", notification_body, applicationContext, bookstop_id);
+                                BookAdapter.sendNotification(notification_body, applicationContext, bookstop_id);
                                 List<String> bookstop = new ArrayList<>();
                                 bookstop.add(bookstop_id);
                                 bookstop.add(notification_body);

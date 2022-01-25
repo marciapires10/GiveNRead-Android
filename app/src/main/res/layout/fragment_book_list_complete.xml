@@ -19,7 +19,8 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
         android:src="@drawable/ic_baseline_add_24"
-        android:id="@+id/fab_addbooks">
+        android:id="@+id/fab_addbooks"
+        android:contentDescription="@string/fab_button">
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

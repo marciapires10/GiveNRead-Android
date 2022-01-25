@@ -4,18 +4,15 @@ package pt.ua.givenread;
 import android.content.Context;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toolbar;
 
 
 import java.util.concurrent.ExecutionException;
@@ -25,15 +22,7 @@ public class BooksListFragment extends Fragment {
 
     private BookViewModel viewModel;
     private BookListAdapter adapter_list1, adapter_list2;
-    private LinearLayoutManager HorizontalLayout;
     private Context context;
-
-    private Button addTGButton;
-    private Button seeAllTGButton;
-    private Button addTRButton;
-    private Button seeAllTRButton;
-
-    private Fragment previous_fragment;
 
 
     public BooksListFragment() {
@@ -65,19 +54,19 @@ public class BooksListFragment extends Fragment {
 
         RecyclerView recyclerView1 = view.findViewById(R.id.fragment_bookList1_RecyclerView);
         recyclerView1.setLayoutManager(new LinearLayoutManager(getContext()));
-        HorizontalLayout = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-        recyclerView1.setLayoutManager(HorizontalLayout);
+        LinearLayoutManager horizontalLayout = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView1.setLayoutManager(horizontalLayout);
         recyclerView1.setAdapter(adapter_list1);
 
 
         RecyclerView recyclerView2 = view.findViewById(R.id.fragment_bookList2_RecyclerView);
         recyclerView2.setLayoutManager(new LinearLayoutManager(getContext()));
-        HorizontalLayout = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-        recyclerView2.setLayoutManager(HorizontalLayout);
+        horizontalLayout = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView2.setLayoutManager(horizontalLayout);
         recyclerView2.setAdapter(adapter_list2);
 
-        addTGButton = view.findViewById(R.id.addBookToGive);
-        addTRButton = view.findViewById(R.id.addBookToRead);
+        Button addTGButton = view.findViewById(R.id.addBookToGive);
+        Button addTRButton = view.findViewById(R.id.addBookToRead);
 
         try {
             if(viewModel.getBooksToGiveList().isEmpty()){
@@ -104,7 +93,7 @@ public class BooksListFragment extends Fragment {
         }
 
         // Button to see all list of To Give books
-        seeAllTGButton = view.findViewById(R.id.seeAllToGive);
+        Button seeAllTGButton = view.findViewById(R.id.seeAllToGive);
 
         seeAllTGButton.setOnClickListener(v -> {
             BookListCompleteFragment fragment_tg = new BookListCompleteFragment();
@@ -145,7 +134,7 @@ public class BooksListFragment extends Fragment {
 
 
         // Button to see all list of To Read books
-        seeAllTRButton = view.findViewById(R.id.seeAllToRead);
+        Button seeAllTRButton = view.findViewById(R.id.seeAllToRead);
 
         seeAllTRButton.setOnClickListener(v -> {
             BookListCompleteFragment fragment_tr = new BookListCompleteFragment();

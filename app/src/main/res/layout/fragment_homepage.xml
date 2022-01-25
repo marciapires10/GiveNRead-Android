@@ -12,12 +12,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/number_of_matches"
-        android:textSize="24dp"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        tools:layout_editor_absoluteY="16dp"></TextView>
+        tools:layout_editor_absoluteY="16dp" />
 
     <Button
         android:id="@+id/request_books_btn"
@@ -26,7 +26,7 @@
         android:text="@string/request_books"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/match_counter"
-        tools:layout_editor_absoluteX="2dp"></Button>
+        tools:layout_editor_absoluteX="2dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/matches_recyclerview"
@@ -47,7 +47,7 @@
         android:text="@string/stop_connection"
         app:layout_constraintBottom_toTopOf="@+id/connections_id"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"></Button>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/connections_id"
@@ -56,12 +56,12 @@
         android:layout_marginBottom="4dp"
         android:gravity="end"
         android:text="@string/you_aren_t_connected_yet"
-        android:textSize="14dp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.929"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"></TextView>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/start_btn"
@@ -70,7 +70,7 @@
         android:text="@string/start_connection"
         app:layout_constraintBottom_toTopOf="@+id/stop_connecton_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"></Button>
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

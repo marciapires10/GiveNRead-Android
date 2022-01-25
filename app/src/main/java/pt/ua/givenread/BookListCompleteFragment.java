@@ -1,7 +1,5 @@
 package pt.ua.givenread;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,7 +7,6 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +17,6 @@ public class BookListCompleteFragment extends Fragment {
 
     private String type = "";
     private BookListCompleteAdapter adapter;
-    private BookViewModel viewModel;
-    private FloatingActionButton addBooks;
 
     public BookListCompleteFragment() {
         // Required empty public constructor
@@ -34,7 +29,7 @@ public class BookListCompleteFragment extends Fragment {
             type = getArguments().getString("Type");
         }
 
-        viewModel = ViewModelProviders.of(this).get(BookViewModel.class);
+        BookViewModel viewModel = ViewModelProviders.of(this).get(BookViewModel.class);
         viewModel.init();
         adapter = new BookListCompleteAdapter(new BookListCompleteAdapter.BookDiff(), viewModel);
 
@@ -57,7 +52,7 @@ public class BookListCompleteFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
-        addBooks = view.findViewById(R.id.fab_addbooks);
+        FloatingActionButton addBooks = view.findViewById(R.id.fab_addbooks);
 
         addBooks.setOnClickListener(v -> {
             BookSearchFragment fragment = new BookSearchFragment();

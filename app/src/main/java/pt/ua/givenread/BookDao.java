@@ -7,10 +7,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import io.reactivex.Flowable;
 
 @Dao
 public interface BookDao {
@@ -18,8 +15,6 @@ public interface BookDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Book book);
 
-    @Insert
-    void insertAll(List<Book> books);
 
     @Query("DELETE FROM books")
     void deleteAll();

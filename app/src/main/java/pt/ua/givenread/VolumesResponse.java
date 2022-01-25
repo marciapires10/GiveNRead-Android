@@ -3,9 +3,7 @@ package pt.ua.givenread;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 public class VolumesResponse {
 
@@ -15,6 +13,7 @@ public class VolumesResponse {
 
     @SerializedName("items")
     @Expose
+    final
     ArrayList<Volume> items = null;
 
     @SerializedName("totalItems")

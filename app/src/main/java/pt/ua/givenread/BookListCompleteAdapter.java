@@ -1,18 +1,14 @@
 package pt.ua.givenread;
 
-import android.util.Log;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
-import java.util.ArrayList;
-
 public class BookListCompleteAdapter extends ListAdapter<Book, BookListCompleteViewHolder> {
 
-    BookViewModel bookViewModel;
+    final BookViewModel bookViewModel;
 
     public BookListCompleteAdapter(DiffUtil.ItemCallback<Book> diffCallback, BookViewModel viewModel){
         super(diffCallback);
