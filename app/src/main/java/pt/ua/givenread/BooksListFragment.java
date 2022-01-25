@@ -33,6 +33,8 @@ public class BooksListFragment extends Fragment {
     private Button addTRButton;
     private Button seeAllTRButton;
 
+    private Fragment previous_fragment;
+
 
     public BooksListFragment() {
         // Required empty public constructor
@@ -87,6 +89,8 @@ public class BooksListFragment extends Fragment {
                     Bundle args = new Bundle();
                     args.putString("type", "ToGive");
                     fragment.setArguments(args);
+                    MainActivity.getInstance().previous_fragment = MainActivity.getInstance().booksListFragment;
+                    MainActivity.getInstance().last_fragment = true;
                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                 });
             }
@@ -107,7 +111,11 @@ public class BooksListFragment extends Fragment {
             Bundle type_tg = new Bundle();
             type_tg.putString("Type", "ToGive");
             fragment_tg.setArguments(type_tg);
+            MainActivity.getInstance().previous_fragment = MainActivity.getInstance().booksListFragment;
+            MainActivity.getInstance().last_fragment = true;
             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment_tg).commit();
+
+
         });
 
 
@@ -121,6 +129,8 @@ public class BooksListFragment extends Fragment {
                     Bundle args = new Bundle();
                     args.putString("type", "ToRead");
                     fragment.setArguments(args);
+                    MainActivity.getInstance().previous_fragment = MainActivity.getInstance().booksListFragment;
+                    MainActivity.getInstance().last_fragment = true;
                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                 });
             }
@@ -142,6 +152,8 @@ public class BooksListFragment extends Fragment {
             Bundle type_tr = new Bundle();
             type_tr.putString("Type", "ToRead");
             fragment_tr.setArguments(type_tr);
+            MainActivity.getInstance().previous_fragment = MainActivity.getInstance().booksListFragment;
+            MainActivity.getInstance().last_fragment = true;
             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment_tr).commit();
         });
 

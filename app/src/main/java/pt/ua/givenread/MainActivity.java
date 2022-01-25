@@ -7,11 +7,11 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Fragment;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
@@ -32,9 +32,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private static MainActivity instance;
     BookViewModel viewModel;
     Handler handler = new Handler();
-
-    private Fragment previousFragment;
-
+    public Fragment previous_fragment;
+    public boolean last_fragment = true;
     BottomNavigationView bottomNavView;
     ActionBar actionBar;
 
@@ -59,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         String menuFragment = getIntent().getStringExtra("menuFragment");
         String bookstop = getIntent().getStringExtra("Bookstop");
+
+        actionBar = getSupportActionBar();
 
         if(menuFragment != null && bookstop != null){
             if (menuFragment.equals("MapsFragment")){
@@ -112,6 +113,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 CAMERA_PERMISSION,
                 CAMERA_REQUEST_CODE
         );
+
+
     }
 
     private void enableCamera() {
@@ -137,11 +140,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, booksListFragment).commit();
                 return true;
             case R.id.camera_opt:
-                if (hasCameraPermission()) {
-                    enableCamera();
-                } else {
-                    requestPermission();
-                }
+                requestPermission();
+                enableCamera();
                 return true;
             case R.id.map_opt:
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, mapsFragment).commit();
@@ -154,13 +154,44 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+            onBackPressed();  return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onBackPressed() {
-        if(bottomNavView.getSelectedItemId () != R.id.home_opt)
+
+        if(previous_fragment != null)
         {
+            Log.d("Previous fragment", previous_fragment.toString());
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, previous_fragment).commit();
+            if(!last_fragment)
+            {
+                Log.d("Last fragment","Was not last fragment");
+                last_fragment = true;
+                previous_fragment = booksListFragment;
+            }
+            else
+            {
+
+                actionBar.setDisplayHomeAsUpEnabled(false);
+                previous_fragment = null;
+            }
+        }
+        else if(bottomNavView.getSelectedItemId () != R.id.home_opt)
+        {
+            Log.d("Previous Fragment","WAS NULL");
             bottomNavView.setSelectedItemId(R.id.home_opt);
         }
         else
         {
+            Log.d("Previous Fragment","WAS NULL 2");
             super.onBackPressed();
         }
     }
@@ -179,5 +210,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavView.getOrCreateBadge(R.id.notify_opt).setNumber(bottomNavView.getOrCreateBadge(R.id.notify_opt).getNumber() + number);
     }
 
-
+    public void showBackButton() {
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
 }

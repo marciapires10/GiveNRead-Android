@@ -44,7 +44,7 @@ public class BookSearchFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        MainActivity.getInstance().showBackButton();
         if (getArguments() != null && getArguments().containsKey("type")) {
             type = getArguments().getString("type");
         }

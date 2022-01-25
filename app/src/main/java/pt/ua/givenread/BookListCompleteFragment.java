@@ -51,7 +51,7 @@ public class BookListCompleteFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_book_list_complete, container, false);
 
-        //showBackButton();
+        MainActivity.getInstance().showBackButton();
 
         RecyclerView recyclerView = view.findViewById(R.id.list_complete_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -60,24 +60,15 @@ public class BookListCompleteFragment extends Fragment {
         addBooks = view.findViewById(R.id.fab_addbooks);
 
         addBooks.setOnClickListener(v -> {
-            /**Context mcontext = v.getContext();
-            Intent intent = new Intent(mcontext, BookSearchActivity.class);
-            intent.putExtra("type", type);
-            mcontext.startActivity(intent);**/
             BookSearchFragment fragment = new BookSearchFragment();
             Bundle args = new Bundle();
             args.putString("type", type);
             fragment.setArguments(args);
+            MainActivity.getInstance().previous_fragment = this;
+            MainActivity.getInstance().last_fragment = false;
             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
         });
 
         return view;
     }
-
-    /**public void showBackButton() {
-        if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-    }**/
-
 }
