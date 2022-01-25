@@ -26,6 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="290dp"
         android:id="@+id/matches_recyclerview"
+        android:scrollbars="vertical"
         tools:listitem="@layout/matches_row"/>
 
     <LinearLayout
@@ -42,6 +43,7 @@
             android:id="@+id/advertise_btn"
             android:layout_columnWeight="1"
             android:layout_column="0"
+            android:padding="10dp"
             android:text="@string/advertise">
         </Button>
 

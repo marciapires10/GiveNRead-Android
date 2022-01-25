@@ -13,4 +13,5 @@
     <string name="discovery">Discovery</string>
     <string name="stop_connection">Stop connection</string>
     <string name="request_books">Request books</string>
+    <string name="search_for_book">Search for book</string>
 </resources>

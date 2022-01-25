@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Search for book..."
+        android:text="@string/search_for_book"
         android:textSize="20sp"/>
 
     <com.google.android.material.textfield.TextInputLayout
